@@ -1,0 +1,369 @@
+// Colors
+
+$white:                                     #fff !default;
+$black:                                     #000 !default;
+
+$primary:                                   #4c9be8 !default;
+$secondary:                                 #4e5d6c !default;
+$success:                                   #5cb85c !default;
+$info:                                      #5bc0de !default;
+$warning:                                   #ffc107 !default;
+$danger:                                    #d9534f !default;
+$light:                                     #abb6c2 !default;
+$dark:                                      #20374c !default;
+$normal:                                    #ebebeb !default;
+
+$spacer:                                    .85rem !default;
+
+// Body
+
+$body-bg:                                   #0f2537 !default;
+$body-color:                                $normal !default;
+
+// Links
+
+$link-color:                                #4c9be8 !default;
+$link-decoration:                           none !default;
+$link-hover-decoration:                     null !default;
+
+// Grid
+
+$grid-gutter-width:                         $spacer !default;
+
+$container-padding-x:                       $grid-gutter-width !default;
+
+// Border
+
+$border-width:                              1px !default;
+$border-style:                              solid !default;
+$border-color:                              rgba(0, 0, 0, 0.175) !default;
+$border-radius:                             .375rem !default;
+
+// Shadow
+
+$box-shadow:                                0 .5rem 1rem rgba($white, .15) !default;
+$box-shadow-sm:                             0 .125rem .25rem rgba($white, .075) !default;
+$box-shadow-lg:                             0 1rem 3rem rgba($white, .175) !default;
+$box-shadow-inset:                          inset 0 1px 2px rgba($white, .075) !default;
+
+// Typography
+
+$paragraph-margin-bottom:                   0 !default;
+
+$font-family-sans-serif:                    Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-monospace:                     monospace !default;
+
+$font-size-root:                            null !default;
+$font-size-base:                            .85rem !default;
+
+$font-weight-normal:                        400 !default;
+$font-weight-bold:                          700 !default;
+
+$line-height-base:                          1.5 !default;
+
+$headings-margin-bottom:                    0 !default;
+
+$small-font-size:                           .85em !default;
+
+$text-muted:                                #bbd2e1 !default;
+
+// Tables
+
+$table-cell-padding-y:                      $spacer * .75 !default;
+$table-cell-padding-x:                      $spacer !default;
+
+$table-cell-vertical-align:                 top !default;
+
+$table-color:                               $normal !default;
+$table-bg:                                  transparent !default;
+$table-accent-bg:                           transparent !default;
+
+$table-th-font-weight:                      null !default;
+
+$table-striped-color:                       $table-color !default;
+$table-striped-bg-factor:                   .05 !default;
+$table-striped-bg:                          rgba($black, $table-striped-bg-factor) !default;
+
+$table-active-color:                        $table-color !default;
+$table-active-bg-factor:                    .1 !default;
+$table-active-bg:                           rgba($black, $table-active-bg-factor) !default;
+
+$table-hover-color:                         $table-color !default;
+$table-hover-bg-factor:                     .075 !default;
+$table-hover-bg:                            rgba($black, $table-hover-bg-factor) !default;
+
+$table-border-width:                        $border-width !default;
+$table-border-color:                        $border-color !default;
+
+$table-caption-color:                       $text-muted !default;
+
+// Buttons
+
+$component-active-color:                    $white !default;
+$component-active-bg:                       $light !default;
+
+$input-btn-padding-y:                       $spacer * .25 !default;
+$input-btn-padding-x:                       $spacer * .75 !default;
+$input-btn-font-size:                       $font-size-base !default;
+
+$input-btn-padding-y-sm:                    $spacer * .125 !default;
+$input-btn-padding-x-sm:                    $spacer * .5 !default;
+$input-btn-font-size-sm:                    $small-font-size !default;
+
+$btn-font-weight:                           $font-weight-normal !default;
+$btn-box-shadow:                            inset 0 1px 0 rgba($white, .15), 0 1px 1px rgba($black, .075) !default;
+$btn-disabled-opacity:                      .25 !default;
+
+$btn-link-disabled-color:                   $text-muted !default;
+
+// Forms
+
+$form-text-margin-top:                      0 !default;
+$form-text-color:                           $text-muted !default;
+
+$form-label-margin-bottom:                  0 !default;
+$form-label-font-size:                      $small-font-size !default;
+$form-label-color:                          $text-muted !default;
+
+$input-bg:                                  $secondary !default;
+$input-disabled-color:                      $text-muted !default;
+$input-disabled-bg:                         $secondary !default;
+
+$input-color:                               $normal !default;
+$input-border-color:                        $border-color !default;
+$input-border-width:                        $border-width !default;
+$input-box-shadow:                          $box-shadow-inset !default;
+
+$input-focus-border-color:                  $primary !default;
+$input-focus-color:                         $input-color !default;
+
+$input-placeholder-color:                   $text-muted !default;
+$input-plaintext-color:                     $normal !default;
+
+$input-height-border:                       $input-border-width * 2 !default;
+
+$form-check-input-width:                    1em !default;
+$form-check-min-height:                     $font-size-base * $line-height-base !default;
+$form-check-padding-start:                  $form-check-input-width + .5em !default;
+$form-check-margin-bottom:                  .125rem !default;
+
+$form-check-input-bg:                       $input-bg !default;
+$form-check-input-border:                   1px solid rgba($black, .25) !default;
+$form-check-input-border-radius:            .25em !default;
+$form-check-radio-border-radius:            50% !default;
+
+$form-check-input-disabled-opacity:         $btn-disabled-opacity !default;
+$form-check-label-disabled-opacity:         $btn-disabled-opacity !default;
+$form-check-btn-check-disabled-opacity:     $btn-disabled-opacity !default;
+
+$form-check-inline-margin-end:              0 !default;
+
+// Navs
+
+$nav-link-padding-y:                        $spacer * .5 !default;
+$nav-link-padding-x:                        $spacer !default;
+$nav-link-color:                            $link-color !default;
+$nav-link-disabled-color:                   $text-muted !default;
+
+$nav-tabs-border-color:                     $dark !default;
+$nav-tabs-border-width:                     1px !default;
+$nav-tabs-border-radius:                    $border-radius !default;
+$nav-tabs-link-hover-border-color:          $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-border-color !default;
+$nav-tabs-link-active-color:                $normal !default;
+$nav-tabs-link-active-bg:                   $body-bg !default;
+$nav-tabs-link-active-border-color:         $body-bg !default;
+
+$nav-pills-border-radius:                   $border-radius !default;
+$nav-pills-link-active-color:               $component-active-color !default;
+$nav-pills-link-active-bg:                  $component-active-bg !default;
+
+// Dropdowns
+
+$dropdown-padding-x:                        0 !default;
+$dropdown-padding-y:                        $spacer * .75 !default;
+$dropdown-spacer:                           $spacer * .125 !default;
+$dropdown-bg:                               $dark !default;
+$dropdown-border-color:                     $border-color !default;
+$dropdown-border-radius:                    $border-radius !default;
+$dropdown-border-width:                     $border-width !default;
+$dropdown-box-shadow:                       $box-shadow !default;
+
+$dropdown-link-color:                       $normal !default;
+$dropdown-link-hover-color:                 $black !default;
+$dropdown-link-hover-bg:                    $primary !default;
+
+$dropdown-link-disabled-color:              $text-muted !default;
+
+$dropdown-item-padding-y:                   $spacer * .5 !default;
+$dropdown-item-padding-x:                   $spacer !default;
+
+// Cards
+
+$card-border-color:                         $border-color !default;
+$card-spacer-y:                             $spacer !default;
+$card-spacer-x:                             $spacer * .75 !default;
+$card-title-spacer-y:                       $spacer * .75 !default;
+$card-cap-padding-y:                        $card-spacer-y * .5 !default;
+$card-cap-padding-x:                        $card-spacer-x !default;
+$card-cap-bg:                               rgba(255, 255, 255, 0.075) !default;
+$card-bg:                                   $dark !default;
+$card-group-margin:                         $spacer * .75 !default;
+
+// Toasts
+
+$toast-padding-x:                           $spacer * .75 !default;
+$toast-padding-y:                           $spacer !default;
+$toast-font-size:                           $font-size-base !default;
+$toast-background-color:                    $light !default;
+$toast-spacing:                             $container-padding-x !default;
+
+// Badges
+
+$badge-font-size:                           .75em !default;
+$badge-font-weight:                         $font-weight-bold !default;
+$badge-color:                               $dark !default;
+$badge-padding-y:                           $spacer * .25 !default;
+$badge-padding-x:                           $spacer * .5 !default;
+
+// Modals
+
+$modal-inner-padding:                       $spacer !default;
+
+$modal-dialog-margin:                       0 !default;
+
+$modal-content-bg:                          $dark !default;
+$modal-content-border-color:                $border-color !default;
+$modal-content-border-width:                $border-width !default;
+$modal-content-border-radius:               $border-radius !default;
+
+$modal-backdrop-bg:                         $black !default;
+$modal-backdrop-opacity:                    .5 !default;
+
+$modal-header-bg:                           rgba(255, 255, 255, 0.075) !default;
+$modal-header-border-color:                 $modal-content-border-color !default;
+$modal-header-border-width:                 $modal-content-border-width !default;
+$modal-header-padding-y:                    $spacer * .5 !default;
+$modal-header-padding-x:                    $spacer * .75 !default;
+
+$modal-footer-margin-between:               $spacer !default;
+$modal-footer-border-color:                 transparent !default;
+$modal-footer-border-width:                 $modal-header-border-width !default;
+
+// Alerts
+
+$alert-padding-y:                           $spacer * .5 !default;
+$alert-padding-x:                           $spacer * .75 !default;
+$alert-margin-bottom:                       0 !default;
+$alert-border-radius:                       $border-radius !default;
+$alert-border-width:                        $border-width !default;
+
+// Progress bars
+
+$progress-height:                           3px !default;
+$progress-font-size:                        $font-size-base * .75 !default;
+$progress-bg:                               $light !default;
+$progress-border-radius:                    $border-radius !default;
+$progress-box-shadow:                       $box-shadow-inset !default;
+$progress-bar-color:                        $white !default;
+$progress-bar-bg:                           $primary !default;
+$progress-bar-transition:                   width .01s ease !default;
+
+// List group
+
+$list-group-color:                          $normal !default;
+$list-group-bg:                             $dark !default;
+$list-group-border-color:                   $border-color !default;
+$list-group-border-width:                   $border-width !default;
+$list-group-border-radius:                  $border-radius !default;
+
+$list-group-item-padding-y:                 $spacer * .5 !default;
+$list-group-item-padding-x:                 $spacer * .75 !default;
+
+$list-group-hover-bg:                       transparent !default;
+$list-group-active-color:                   $component-active-color !default;
+$list-group-active-bg:                      $component-active-bg !default;
+$list-group-active-border-color:            $border-color !default;
+
+$list-group-disabled-color:                 $text-muted !default;
+$list-group-disabled-bg:                    $list-group-bg !default;
+
+$list-group-action-color:                   $normal !default;
+$list-group-action-hover-color:             $list-group-action-color !default;
+
+$list-group-action-active-color:            $normal !default;
+$list-group-action-active-bg:               $list-group-bg !default;
+
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+
+////////////////////////////////////////////////////////////////////////////////
+
+@keyframes flicker {
+  0%   { opacity: .9; }
+  50%  { opacity: .1; }
+  100% { opacity: .9; }
+}
+@-o-keyframes flicker{
+  0%   { opacity: .9; }
+  50%  { opacity: .1; }
+  100% { opacity: .9; }
+}
+@-moz-keyframes flicker{
+  0%   { opacity: .9; }
+  50%  { opacity: .1; }
+  100% { opacity: .9; }
+}
+@-webkit-keyframes flicker{
+  0%   { opacity: .9; }
+  50%  { opacity: .1; }
+  100% { opacity: .9; }
+}
+
+.flicker {
+   -webkit-animation: flicker 2s infinite;
+   -moz-animation: flicker 2s infinite;
+   -ms-animation: flicker 2s infinite;
+   -o-animation: flicker 2s infinite;
+    animation: flicker 2s infinite;
+}    
+
+@keyframes rotating {
+  0%   { -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -ms-transform: rotate(0deg); -o-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+.rotating {
+   -webkit-animation: rotating 2s linear infinite;
+   -moz-animation: rotating 2s linear infinite;
+   -ms-animation: rotating 2s linear infinite;
+   -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+html, #__nuxt { width: 100%; height: 100%; overflow: hidden; }
+
+body { width: 100%; height: 100%; overflow: hidden; }
+
+#__layout { width: 100%; height: 100%; overflow: hidden; }
+
+::-webkit-scrollbar { width: .35rem; height: .35rem; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { border-radius: .25rem; background: rgba(255, 255, 255, .125); }
+
+.scrollbar { height: 100%; overflow-y: auto; overflow-x: hidden; scrollbar-color: $border-color rgba(255, 255, 255, .075); scrollbar-width: thin; }
+
+#top-bar { height: 64px; display: flex; align-items: center; }
+#tabs-bar { height: 32px; display: flex; align-items: flex-end; flex-wrap: nowrap; }
+#content-bar { height: calc(100% - 152px); }
+#bottom-bar { height: 56px; display: flex; align-items: center; }
+
+.nav { flex-wrap: nowrap; }
+
+.modal-header { background: $modal-header-bg; }
+.modal-footer > * { margin: 0 calc($spacer * .5) 0; }
+
+.text-shadow { text-shadow: 0px 1px 1px #000, 0px -1px 1px #000, 1px 0px 1px #000, -1px 0px 1px #000; }
+
+[data-bs-toggle="collapse"] .fa-caret-down { transition: transform .25s; }
+.collapsed .fa-caret-down { transform: rotate(-90deg); }
