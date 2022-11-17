@@ -1,0 +1,911 @@
+<!doctype html>
+<html>
+    <head>
+        <!-- -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- -->
+        <link rel="stylesheet" type="text/css" href="css/vendor-bootstrap.min.css" />
+        <!-- -->
+        <link rel="stylesheet" type="text/css" href="css/game-styles.css" />
+        <!-- -->
+<<<<<<< HEAD
+        <script src="js/vendor-lz-string.js"></script>
+        <script src="js/vendor-fontawesome.js"></script>
+        <!-- -->
+        <script src="js/util-ui.js"></script>
+        <script src="js/util-trans.js"></script>
+        <!-- -->
+        <script src="locales/en.js"></script>
+        <!-- -->
+        <script src="js/data-world1.js"></script>
+        <!-- -->
+=======
+        <link rel="stylesheet" type="text/css" href="css/vendor-bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/game-styles.css" />
+        <!-- -->
+        <script src="js/vendor-lz-string.js"></script>
+        <script src="js/vendor-fontawesome.js"></script>
+        <!-- -->
+        <script src="js/util-js.js"></script>
+        <script src="js/util-ajax.js"></script>
+        <script src="js/util-ui.js"></script>
+        <!-- -->
+        <script src="js/game-classes.js" defer="defer"></script>
+        <script src="js/game-data.js" defer="defer"></script>
+        <script src="js/game-update.js" defer="defer"></script>
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+        <script src="js/game-core.js" defer="defer"></script>
+    </head>
+    <body>
+        <!-- -->
+<<<<<<< HEAD
+        <div class="p-2">
+            <div class="row gx-2">
+                <div class="col">
+                    <span class="h4">FG Civ</span>
+                </div>
+                <div class="col-auto">
+                    <div class="nav nav-pills row g-2">
+                        <div class="nav-item col-auto">
+                            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                                <i class="fa-fw fas fa-cog"></i>
+=======
+        <div class="h-100 d-flex flex-column position-relative">
+            <!-- -->
+            <div id="topbar">
+                <div class="container-fluid container-lg">
+                    <div class="pt-2 row align-items-center">
+                        <!-- -->
+                        <div class="col ff-suezOne">
+                            <h3 class="mb-0"><span id="civType">Thorp</span> of <span id="civName">Freddec Games</span></h3>
+                            <div id="ruler">Ruled by <span id="rulerName">Freddec</span></div>
+                        </div>
+                        <!-- -->
+                        <div class="col-auto">
+                            <span class="ff-suezOne opacity-75">CivClicker by FG</span>
+                        </div>
+                        <!-- -->
+                        <div class="col-auto">
+                            <span class="ff-suezOne">v0.018</span>
+                        </div>
+                        <!-- -->
+                        <div id="newRelease" class="col-auto" style="display:none;">
+                            <button onClick="window.location.reload();">
+                                New Release!
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+                            </button>
+                        </div>
+                        <div class="nav-item col-auto">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="settings" aria-selected="true">
+                                <i class="fa-fw fas fa-home"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
+        <div class="tab-content" style="height:calc(100% - 42px);">
+            <!-- -->
+            <div id="home" class="tab-pane h-100 active">
+                <!-- -->
+                <div id="resources" class="p-2 border-top">
+                </div>
+                <!-- -->
+                <div class="tab-content" style="height:calc(100% - 90px);">
+                    <!-- -->
+                    <div id="city" class="tab-pane h-100 scrollbar p-2 border-top active">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-1">
+                                    <!-- -->
+<<<<<<< HEAD
+                                    <div id="townHalls" class="col-12">
+                                    </div>
+                                    <!-- -->
+                                    <div class="col-12" data-object="land">
+                                        <div class="card card-body py-1 px-0 bg-transparent border-0">
+                                            <div class="row gx-2">
+                                                <div class="col-auto">
+                                                    <img src="img/world1/land.webp" width="16px" />
+=======
+                                    <div class="col-12">
+                                        <div class="row g-0">
+                                            <!-- -->
+                                            <div class="col-12">
+                                                <div id="basicResources" class="row g-0">
+                                                    <!-- populated by javascript -->
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div class="col-12">
+                                                <div class="row gx-2 align-items-center" style="height:30px;">
+                                                    <div class="col-auto"><img src="img/smitten.png" class="icon-lg" alt="Happiness" data-bs-toggle="tooltip" data-bs-title="Happiness" /></div>
+                                                    <div class="col"><span>Happiness</span></div>
+                                                    <div class="col-auto">
+                                                        <div id="morale" class="row gx-1">
+                                                            <div class="col-auto"><span class="badge rounded-pill bg-black text-muted">Blissful</span></div>
+                                                            <div class="col-auto"><span class="badge rounded-pill bg-black text-muted">Happy</span></div>
+                                                            <div class="col-auto"><span class="badge rounded-pill bg-black text-muted">Content</span></div>
+                                                            <div class="col-auto"><span class="badge rounded-pill bg-black text-muted">Unhappy</span></div>
+                                                            <div class="col-auto"><span class="badge rounded-pill bg-black text-muted">Angry</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- -->
+                                    <div class="col-12" style="height: calc(100% - 272px);">
+                                        <h5 class="ff-suezOne">Workers</h5>
+                                        <div class="row gy-1 scrollbar" style="height: calc(100% - 32px);">
+                                            <div class="col-12">
+                                                <div class="row gy-1">
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div class="row gx-2 align-items-center" style="height:25px;">
+                                                            <div class="col"><span>Total Workers</span></div>
+                                                            <div class="col-auto"><span data-action="display_pop" data-target="living"></span></div>
+                                                            <div class="col-auto"><small class="opacity-50">/<span data-action="display_pop" data-target="limit"></span></small></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div class="row gx-2 align-items-center" style="height:25px;">
+                                                            <div class="col-auto"><span>New Worker</span></div>
+                                                            <div class="col text-end">
+                                                                <img src="img/food.png" class="icon-sm" alt="Food" data-bs-toggle="tooltip" data-bs-title="Food" />
+                                                                <span id="workerCost"></span>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="unit1" id="spawn1button" onmousedown="spawn(1)">+1</button>
+                                                                <button class="unit10" id="spawn10button" onmousedown="spawn(10)">+10</button>
+                                                                <button class="unit100" id="spawn100button" onmousedown="spawn(100)">+100</button>
+                                                                <button class="unit1000" id="spawn1000button" onmousedown="spawn(1000)">+1k</button>
+                                                                <button class="unitInfinity" id="spawnMaxbutton" onmousedown="spawn(Infinity)">+<span id="workerNumMax">Max</span></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div id="zombieWorkers" class="col-12" style="display: none;">
+                                                        <div class="row gx-2 align-items-center" style="height: 25px;">
+                                                            <div class="col"><span>Zombies</span></div>
+                                                            <div class="col-auto"><span data-action="display" data-target="zombie"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div id="jobsContainer" class="col-12">
+                                                        <table id="jobs" class="row g-1">
+                                                            <!-- populated by javascript -->
+                                                        </table>
+                                                    </div>
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+                                                </div>
+                                                <div class="col">
+                                                    <span class="h6">Land</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <span><small class="opacity-50">x</small> <span data-display="count"></span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+<<<<<<< HEAD
+                                        <span class="h5">Housing</span>
+                                    </div>
+                                    <div id="houses" class="col-12">
+=======
+                                        <div class="row">
+                                            <!-- -->
+                                            <div class="col-6">
+                                                <div class="row g-0">
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="skins" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/skins.png" class="icon-lg" alt="Skins" data-bs-toggle="tooltip" data-bs-title="Skins" /></div>
+                                                            <div class="col"><span>Skins</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="herbs" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/herbs.png" class="icon-lg" alt="Herbs" data-bs-toggle="tooltip" data-bs-title="Herbs" /></div>
+                                                            <div class="col"><span>Herbs</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="ore" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/ore.png" class="icon-lg" alt="Ore" data-bs-toggle="tooltip" data-bs-title="Ore" /></div>
+                                                            <div class="col"><span>Ore</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="gold" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/gold.png" class="icon-lg" alt="Gold" data-bs-toggle="tooltip" data-bs-title="Gold" /></div>
+                                                            <div class="col"><span>Gold</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto" style="width:80px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div class="col-6">
+                                                <div class="row g-0">
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="leather" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/leather.png" class="icon-lg" alt="Leather" data-bs-toggle="tooltip" data-bs-title="Leather" /></div>
+                                                            <div class="col"><span>Leather</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="piety" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/piety.png" class="icon-lg" alt="Piety" data-bs-toggle="tooltip" data-bs-title="Piety" /></div>
+                                                            <div class="col"><span>Piety</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="metal" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/metal.png" class="icon-lg" alt="Metal" data-bs-toggle="tooltip" data-bs-title="Metal" /></div>
+                                                            <div class="col"><span>Metal</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto text-end" style="width:80px;"><span data-action="displayNet"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- -->
+                                                    <div class="col-12">
+                                                        <div data-target="corpse" class="row gx-2 align-items-center" style="height:30px;">
+                                                            <div class="col-auto"><img src="img/corpse.png" class="icon-lg" alt="Corpse" data-bs-toggle="tooltip" data-bs-title="Corpse" /></div>
+                                                            <div class="col"><span>corpse</span></div>
+                                                            <div class="col-auto"><span data-action="display"></span></div>
+                                                            <div class="col-auto" style="width:80px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- -->
+                                    <div class="col-12" style="height:calc(100% - 136px);">
+                                        <!-- -->
+                                        <div id="selectors" class="nav row g-0">
+                                            <!-- -->
+                                            <a id="buildingsSelect" class="col paneSelector active" data-bs-toggle="tab" data-bs-target="#buildingsPane">
+                                                Buildings
+                                            </a>
+                                            <!-- -->
+                                            <a id="upgradesSelect" class="col paneSelector" data-bs-toggle="tab" data-bs-target="#upgradesPane">
+                                                Upgrades
+                                                <div class="notif">!</div>
+                                            </a>
+                                            <!-- -->
+                                            <a id="deitySelect" class="col paneSelector" data-bs-toggle="tab" data-bs-target="#deityPane">
+                                                Deity
+                                                <div class="notif">!</div>
+                                            </a>
+                                            <!-- -->
+                                            <a id="conquestSelect" class="col paneSelector" data-bs-toggle="tab" data-bs-target="#conquestPane">
+                                                Conquest
+                                            </a>
+                                            <!-- -->
+                                            <a id="tradeSelect" class="col paneSelector" data-bs-toggle="tab" data-bs-target="#tradePane">
+                                                Trade
+                                                <div class="notif">!</div>
+                                            </a>
+                                            <!-- -->
+                                            <a id="achievementsSelect" class="col paneSelector" data-bs-toggle="tab" data-bs-target="#achievementsPane">
+                                                Achievements
+                                            </a>
+                                        </div>
+                                        <!-- -->
+                                        <div class="tab-content" style="height:calc(100% - 54px);">
+                                            <!-- -->
+                                            <div id="buildingsPane" class="tab-pane selectPane active h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-1">
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                <div class="col">Total Buildings</div>
+                                                                <div class="col-auto">
+                                                                    <span id="totalBuildings"></span>
+                                                                    <small class="opacity-50">/<span id="totalLand"></span></small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div id="buildings" class="row g-1">
+                                                                <!-- populated by javascript -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="graveTotal" class="col-12" style="display: none;">
+                                                            <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                <div class="col">Unfilled Graves</div>
+                                                                <div class="col-auto"><span data-action="display" data-target="grave"></span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div id="upgradesPane" class="tab-pane selectPane h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-3">
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div id="upgrades" class="row g-1">
+                                                                <!-- populated by javascript -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="wondersContainer" class="col-12" style="display: none;">
+                                                            <h6 class="ff-suezOne">Current Wonder</h6>
+                                                            <div class="row g-1">
+                                                                <!-- -->
+                                                                <div id="startWonderLine" class="col-12" style="display: none;">
+                                                                    <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                        <div class="col-12"><button id="startWonder" onmousedown="startWonder()">Start Building Wonder</button></div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="wonderInProgress" class="col-12" style="display: none;">
+                                                                    <div class="row g-1">
+                                                                        <!-- -->
+                                                                        <div class="col-12">
+                                                                            <div class="wonderTitle row gx-2 align-items-center" style="height:25px;">
+                                                                                <div class="col">
+                                                                                    Progress <span id="progressNumber">0</span>%
+                                                                                </div>
+                                                                                <div id="lowResources" class="col-auto" style="display: none;">
+                                                                                    <span class="text-danger">Limited<span id="limited"> by low resources</span></span>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <div id="progressContainer">
+                                                                                        <div id="progressBar"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div id="speedWonderGroup" class="col-12" style="display: none;">
+                                                                            <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                                <div class="col-auto"><div class="dropdown"><a href="#" class="text-muted" data-bs-toggle="dropdown"><i class="fas fa-fw fa-info-circle" aria-hidden="true"></i></a><div class="dropdown-menu" style="min-width:max-content;">Increase wonder progress</div></div></div>
+                                                                                <div class="col"><button id="speedWonder" onmousedown="speedWonder()">Speed Wonder</button></div>
+                                                                                <div class="col-auto"><img src="img/gold.png" class="icon-sm" alt="gold" data-bs-toggle="tooltip" data-bs-title="Gold" /> 100</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="wonderCompleted" class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <!-- -->
+                                                                        <div class="col-12">
+                                                                            <div class="wonderTitle row gx-2 align-items-center" style="height:25px;">
+                                                                                <div class="col">Wonder Completed! Choose Your Bonus</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div class="col-12">
+                                                                            <div id="wonderCompletedBonuses" class="row g-1 align-items-center">
+                                                                                <!-- populated by javascript -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="pastWondersContainer" class="col-12" style="display: none;">
+                                                            <h6 class="ff-suezOne">Wonders</h6>
+                                                            <div id="pastWonders">
+                                                                <!-- populated by javascript -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="purchasedUpgradesGroup" class="col-12" style="display: none;">
+                                                            <h6 class="ff-suezOne">Purchased Upgrades</h6>
+                                                            <div id="purchasedUpgrades" class="row g-1">
+                                                                <!-- populated by javascript -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div id="deityPane" class="tab-pane selectPane h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-3">
+                                                        <!-- -->
+                                                        <div class="col-12 notYet">
+                                                            <div class="row g-0">
+                                                                <!-- -->
+                                                                <div class="col-12">
+                                                                    <div class="row gx-2 align-items-center">
+                                                                        <div class="col-12">
+                                                                            Your civilization does not yet worship a deity. 
+                                                                            You need to increase piety by assigning clerics at a temple.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="worshipRow" class="col-12">
+                                                            <!-- -->
+                                                            <div class="row g-0">
+                                                                <!-- populated by updatePurchaseRow -->
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="deityContainer" class="col-12">
+                                                            <h6 class="ff-suezOne">Current Deity</h6>
+                                                            <div class="row g-1">
+                                                                <!-- -->
+                                                                <div id="activeDeity" class="col-12">
+                                                                    <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                        <div class="col"><strong><span id="deityAName"></span></strong></div>
+                                                                        <div class="col-auto"><span id="deityADomain" class="deityDomain"></span></div>
+                                                                        <div class="col-auto text-end" style="width:125px;"><span id="deityADevotion"></span> Devotion</div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="deityDomains" class="col-12" style="display: none;">
+                                                                    <div class="row g-1">
+                                                                        <!-- -->
+                                                                        <div class="col-12" style="height:25px;">
+                                                                            You may select only one domain for your deity
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div id="battleRow" class="col-12">
+                                                                            <div class="row gx-2 align-items-center purchaseRow" style="height:25px;" data-target="battle"> 
+                                                                                <div class="col upgradetrue" data-quantity="true">
+                                                                                    <button id="battleDeity" class="xtrue purchaseFor500Piety" onmousedown="selectDeity('battle')">Battle</button>
+                                                                                </div>
+                                                                                <div class="col-auto"><img src="img/piety.png" class="icon-sm" alt="piety" data-bs-toggle="tooltip" data-bs-title="Piety" /> <span id="battleCost" class="cost">500</span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div id="fieldsRow" class="col-12">
+                                                                            <div class="row gx-2 align-items-center purchaseRow" style="height:25px;" data-target="fields">
+                                                                                <div class="col upgradetrue" data-quantity="true">
+                                                                                    <button id="fieldsDeity" class="xtrue purchaseFor500Piety" onmousedown="selectDeity('fields')">Fields</button>
+                                                                                </div>
+                                                                                <div class="col-auto"><img src="img/piety.png" class="icon-sm" alt="piety" data-bs-toggle="tooltip" data-bs-title="Piety" /> <span id="battleCost" class="cost">500</span></div>
+                                                                            </div>		
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div id="underworldRow" class="col-12">
+                                                                            <div class="row gx-2 align-items-center purchaseRow" style="height:25px;" data-target="underworld">
+                                                                                <div class="col upgradetrue" data-quantity="true">
+                                                                                    <button id="underworldDeity" class="xtrue purchaseFor500Piety" onmousedown="selectDeity('underworld')">Underworld</button>
+                                                                                </div>
+                                                                                <div class="col-auto"><img src="img/piety.png" class="icon-sm" alt="piety" data-bs-toggle="tooltip" data-bs-title="Piety" /> <span id="battleCost" class="cost">500</span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- -->
+                                                                        <div id="catsRow" class="col-12">
+                                                                            <div class="row gx-2 align-items-center purchaseRow" style="height:25px;" data-target="cats">
+                                                                                <div class="col upgradetrue" data-quantity="true">
+                                                                                    <button id="catsDeity" class="xtrue purchaseFor500Piety" onmousedown="selectDeity('cats')">Cats</button>
+                                                                                </div>
+                                                                                <div class="col-auto"><img src="img/piety.png" class="icon-sm" alt="piety" data-bs-toggle="tooltip" data-bs-title="Piety" /> <span id="battleCost" class="cost">500</span></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="walkGroup" class="col-12" style="display: none;">
+                                                                    Walk: <span id="walkStat"></span> workers per second
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="battleUpgrades" class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div id="battleAltarRow" class="col-12"></div>
+                                                                        <div id="riddleRow" class="col-12"></div>
+                                                                        <div id="smiteRow" class="col-12"></div>
+                                                                        <div id="throneRow" class="col-12"></div>
+                                                                        <div id="gloryRow" class="col-12"></div>
+                                                                        <div id="lamentRow" class="col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="fieldsUpgrades" class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div id="fieldsAltarRow" class="col-12"></div>
+                                                                        <div id="blessingRow" class="col-12"></div>
+                                                                        <div id="wickermanRow" class="col-12"></div>
+                                                                        <div id="wasteRow" class="col-12"></div>
+                                                                        <div id="walkRow" class="col-12"></div>
+                                                                        <div id="stayRow" class="col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="underworldUpgrades" class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div id="underworldAltarRow" class="col-12"></div>
+                                                                        <div id="bookRow" class="col-12"></div>
+                                                                        <div id="raiseDeadRow" class="col-12"></div>
+                                                                        <div id="feastRow" class="col-12"></div>
+                                                                        <div id="summonShadeRow" class="col-12"></div>
+                                                                        <div id="secretsRow" class="col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="catsUpgrades" class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div id="catAltarRow" class="col-12"></div>
+                                                                        <div id="lureRow" class="col-12"></div>
+                                                                        <div id="pestControlRow" class="col-12"></div>
+                                                                        <div id="companionRow" class="col-12"></div>
+                                                                        <div id="graceRow" class="col-12"></div>
+                                                                        <div id="comfortRow" class="col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->                                                    
+                                                        <div id="pantheonContainer" class="col-12">
+                                                            <h6 class="ff-suezOne">Pantheon</h6>
+                                                            <div class="row g-1">
+                                                                <!-- -->
+                                                                <div id="oldDeities" class="col-12" style="display: none;">
+                                                                    <!-- populated by javascript -->
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="iconoclasmGroup" class="col-12" style="display: none;">
+                                                                    <div class="row gx-2 align-items-center">
+                                                                        <div class="col-auto"><div class="dropdown"><a href="#" class="text-muted" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-fw fa-info-circle" aria-hidden="true"></i></a><div class="dropdown-menu" style="min-width: max-content;">Remove an old deity to gain gold</div></div></div>
+                                                                        <div class="col"><button id="iconoclasm" onmousedown="iconoclasmList()">Iconoclasm</button></div>
+                                                                        <div class="col-auto"><img src="img/gold.png" class="icon-sm" alt="gold" data-bs-toggle="tooltip" data-bs-title="Gold" /> 1 000</div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="iconoclasmList" class="col-12">
+                                                                    <!-- populated by javascript -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="pantheonUpgrades" class="col-12" style="display: none;">
+                                                            <h6 class="ff-suezOne">Pantheon Upgrades</h6>
+                                                            <div id="purchasedPantheon" class="row g-1">
+                                                                <!-- populated by javascript -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div id="conquestPane" class="tab-pane selectPane h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-3">
+                                                        <!-- -->
+                                                        <div class="col-12 notYet">
+                                                            You cannot command an army yet because you don't own a battle standard.
+                                                            Try building a barracks first.
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="standardRow" class="col-12">
+                                                            <!-- populated by javascript -->
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="conquest" class="col-12">
+                                                            <div class="row g-3">
+                                                                <!-- -->
+                                                                <div class="col-12">
+                                                                    <h6 class="ff-suezOne">Army</h6>
+                                                                    <div id="party" class="row g-1">
+                                                                        <!-- populated by javascript -->
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="raidNews" class="col-12" style="display:none;">
+                                                                    <!-- populated by javascript -->
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="raidGroup" class="col-12">
+                                                                    <h6 class="ff-suezOne">To War!</h6>
+                                                                    <p id="gloryGroup" style="display:none;">
+                                                                        Glory: <span id="gloryTimer">0</span> seconds remain
+                                                                    </p>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div id="victoryGroup" class="col-12" style="display:none;">
+                                                                    <h6 class="ff-suezOne">Victory!</h6>
+                                                                    <button id="plunder" onmousedown="plunder()">Plunder Resources</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div id="tradePane" class="tab-pane selectPane h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-3">
+                                                        <!-- -->
+                                                        <div class="col-12 notYet">
+                                                            You do not yet own a trading post.
+                                                            Try trading with a trader when they randomly appear.
+                                                        </div>
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div id="tradeContainer">
+                                                                <span class="text-dark">Trader offers 1 Gold for <span id="tradeRequested"></span> <span id="tradeType"></span> for the next <span id="traderTimer"></span></span>
+                                                                <div class="mt-2"><button id="tradeButton" onmousedown="trade()">Trade</button></div>
+                                                            </div>
+                                                            <div id="noTrader">
+                                                                No trader visiting
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="tradeRow" class="col-12">
+                                                            <!-- populated by javascript -->
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="tradeUpgradeContainer" class="col-12" style="display:none;">
+                                                            <div class="row g-3">
+                                                                <!-- -->
+                                                                <div class="col-12">
+                                                                    <div class="row g-1">
+                                                                        <div id="currencyRow" class="col-12"></div>
+                                                                        <div id="commerceRow" class="col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- -->
+                                                                <div class="col-12">
+                                                                    <h6 class="ff-suezOne">Buy Resources for <img src="img/gold.png" class="icon-sm" alt="gold" data-bs-toggle="tooltip" data-bs-title="Gold" /> 1</h6>
+                                                                    <div class="row g-1">
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('food')">5000 Food</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('wood')">5000 Wood</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('stone')">5000 Stone</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('skins')">500 Skins</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('herbs')">500 Herbs</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('ore')">500 Ore</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('leather')">250 Leather</button></div>
+                                                                        <div class="col-3"><button class="w-100 tradeResource" style="min-width:auto;" onmousedown="buy('metal')">250 Metal</button></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- -->
+                                            <div id="achievementsPane" class="tab-pane selectPane h-100">
+                                                <div class="h-100 ps-3 pe-2 scrollbar">
+                                                    <div class="row g-1">
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                <div class="col">Resource clicks</div>
+                                                                <div class="col-auto"><span id="clicks">0</span></div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div class="col-12">
+                                                            <div class="row gx-2 align-items-center" style="height:25px;">
+                                                                <div class="col">Enemies Slain</div>
+                                                                <div class="col-auto"><span data-action="display" data-target="enemySlain"></span></div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- -->
+                                                        <div id="achievements" class="col-12">
+                                                            <!-- populated by javascript -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Production</span>
+                                    </div>
+                                    <div id="houses" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Military</span>
+                                    </div>
+                                    <div id="houses" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div id="tech" class="tab-pane h-100 scrollbar p-2 border-top">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+<<<<<<< HEAD
+                                        <span class="h5">Available Techs</span>
+                                    </div>
+                                    <div id="techs" class="col-12">
+=======
+                                        <h5 class="ff-suezOne">Resetting</h5>
+                                        <div class="row g-1 align-items-center">
+                                            <div class="col-8">Resetting allows you to gain another <strong>Deity</strong> and build another <strong>Wonder</strong></div>
+                                            <div class="col-4"><button class="w-100" onmousedown="onReset()" title="Reset your game">Reset Game</button></div>
+                                        </div>
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div id="army" class="tab-pane h-100 scrollbar p-2 border-top">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Available Units</span>
+                                    </div>
+                                    <div id="units" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div id="conquest" class="tab-pane h-100 scrollbar p-2 border-top">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Territories to Conquer</span>
+                                    </div>
+                                    <div id="territories" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div id="progress" class="tab-pane h-100 scrollbar p-2 border-top">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Current Progress</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h5">Objectives</span>
+                                    </div>
+                                    <div id="objectives" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- -->
+                <div class="p-2 border-top">
+                    <div class="nav nav-pills flex-nowrap row g-2" style="overflow-x: auto;">
+                        <div class="nav-item col">
+                            <button class="nav-link active" id="city-tab" data-bs-toggle="tab" data-bs-target="#city" type="button" role="tab" aria-controls="city" aria-selected="true">
+                                City
+                            </button>
+                        </div>
+                        <div class="nav-item col">
+                            <button class="nav-link" id="tech-tab" data-bs-toggle="tab" data-bs-target="#tech" type="button" role="tab" aria-controls="tech" aria-selected="false">
+                                Tech
+                            </button>
+                        </div>
+                        <div class="nav-item col">
+                            <button class="nav-link" id="army-tab" data-bs-toggle="tab" data-bs-target="#army" type="button" role="tab" aria-controls="army" aria-selected="false">
+                                Army
+                            </button>
+                        </div>
+                        <div class="nav-item col">
+                            <button class="nav-link" id="conquest-tab" data-bs-toggle="tab" data-bs-target="#conquest" type="button" role="tab" aria-controls="conquest" aria-selected="false">
+                                Conquest
+                            </button>
+                        </div>
+                        <div class="nav-item col">
+                            <button class="nav-link" id="progress-tab" data-bs-toggle="tab" data-bs-target="#progress" type="button" role="tab" aria-controls="progress" aria-selected="false">
+                                Progress
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->
+            <div id="settings" class="tab-pane h-100 border-top">
+                <div class="p-2">
+                    <div class="row g-3">
+                        <!-- -->
+                        <div class="col-12">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <span class="h5">Settings</span>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-danger" onclick="clickWipe()">
+                                        Wipe Local Data
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
+        <script src="js/vendor-bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
+=======
+        <!-- -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-L7KZTWGS9B"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag(){ dataLayer.push(arguments) }
+            gtag('js', new Date())
+            gtag('config', 'G-L7KZTWGS9B')
+        </script>
+        <!-- -->
+        <script>
+            function checkVersion() {
+                
+                let currentTagName = "0.018"
+                ajax.get("https://api.github.com/repos/freddecgames/civclickerbyfg/releases/latest", function(responseText, response) {
+                
+                    let latestTagName = response.tag_name
+                    if (latestTagName != currentTagName) {                    
+                        ui.show("#newRelease", true)
+                    }
+                })
+            }
+            checkVersion()
+            setInterval(checkVersion, 15 * 60 * 1000)
+        </script>
+>>>>>>> d7239b5f2837db1bceae04a7cdd7bca1b1f86e30
+    </body>
+</html>
