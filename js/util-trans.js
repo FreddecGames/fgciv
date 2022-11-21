@@ -22,7 +22,11 @@
             document.documentElement.lang = newLocale
         },
         
-        translate: function(key) { return trans.translations[trans.locale][key] },
+        translate: function(key) {
+            
+            let ret = trans.translations[trans.locale][key]
+            return ret ? ret : key
+        },
 	}
 
 	if (window) { window.trans = trans }
