@@ -37,24 +37,24 @@ function loadDataWorld1() {
         }
     }
 
-    game.gameObjects.push(new Objective({ id:'obj17',	req:{ obj16:1 },    check:{ prov2scout:1 },                         gain:{ good:300 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj16',	req:{ obj15:1 },    check:{ prov1sector3:1 },                       gain:{ gold:300 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj15',	req:{ obj14:1 },    check:{ prov1sector2:1 },                       gain:{ good:400 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj14',	req:{ obj13:1 },    check:{ construction:1 },                       gain:{ gold:350 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj13',	req:{ obj12:1 },    check:{ theWheel:1 },                           gain:{ good:400 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj12',	req:{ obj11:1 },    check:{ stiltHouse:4, pottery:1 },              gain:{ gold:300 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj11',	req:{ obj10:1 },    check:{ potteryTech:1 },                        gain:{ good:200 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj10',	req:{ obj9:1 },     check:{ stiltHouse:3 },                         gain:{ good:300 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj9',	req:{ obj8:1 },     check:{ memorial:2 },                           gain:{ gold:250 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj8',	req:{ obj7:1 },     check:{ spearfighter:3 },                       gain:{ gold:200 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj7',	req:{ obj6:1 },     check:{ prov1sector1:1 },                       gain:{ spearfighter:2 }             }))
-    game.gameObjects.push(new Objective({ id:'obj6',	req:{ obj5:1 },     check:{ stiltHouse:2, spearfighterBarracks:1 }, gain:{ good:200, spearfighter:2 }   }))
-    game.gameObjects.push(new Objective({ id:'obj5',	req:{ obj4:1 },     check:{ spears:1 },                             gain:{ gold:175 }                   }))
-    game.gameObjects.push(new Objective({ id:'obj4',	req:{ obj3:1 },     check:{ stiltHouse:1 }                          }))
-    game.gameObjects.push(new Objective({ id:'obj3',	req:{ obj2:1 },     check:{ stiltHouses:1 },                        gain:{ gold:120, good:120 }         }))
-    game.gameObjects.push(new Objective({ id:'obj2',	req:{ obj1:1 },     check:{ memorial:1 }                            }))
-    game.gameObjects.push(new Objective({ id:'obj1',	req:{ obj0:1 },     check:{ hut:2, hunter:1 }                       }))
-    game.gameObjects.push(new Objective({ id:'obj0',	                    check:{ hut:1 }                                 }))
+    game.gameObjects.push(new Objective({ id:'obj17',	req:{ obj16:1 },    check:{ prov2scout:1 },                             gain:{ good:300 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj16',	req:{ obj15:1 },    check:{ prov1sector3:1 },                           gain:{ gold:300 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj15',	req:{ obj14:1 },    check:{ chalets:1, stiltHouse:5, prov1sector2:1 },  gain:{ good:400 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj14',	req:{ obj13:1 },    check:{ construction:1 },                           gain:{ gold:350 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj13',	req:{ obj12:1 },    check:{ theWheel:1 },                               gain:{ good:400 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj12',	req:{ obj11:1 },    check:{ stiltHouse:4, pottery:1 },                  gain:{ gold:300 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj11',	req:{ obj10:1 },    check:{ potteryTech:1 },                            gain:{ good:200 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj10',	req:{ obj9:1 },     check:{ stiltHouse:3 },                             gain:{ good:300 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj9',	req:{ obj8:1 },     check:{ memorial:2 },                               gain:{ gold:250 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj8',	req:{ obj7:1 },     check:{ spearfighter:3 },                           gain:{ gold:200 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj7',	req:{ obj6:1 },     check:{ prov1sector1:1 },                           gain:{ spearfighter:2 }             }))
+    game.gameObjects.push(new Objective({ id:'obj6',	req:{ obj5:1 },     check:{ stiltHouse:2, spearfighterBarracks:1 },     gain:{ good:200, spearfighter:2 }   }))
+    game.gameObjects.push(new Objective({ id:'obj5',	req:{ obj4:1 },     check:{ spears:1 },                                 gain:{ gold:175 }                   }))
+    game.gameObjects.push(new Objective({ id:'obj4',	req:{ obj3:1 },     check:{ stiltHouse:1 }                              }))
+    game.gameObjects.push(new Objective({ id:'obj3',	req:{ obj2:1 },     check:{ stiltHouses:1 },                            gain:{ gold:120, good:120 }         }))
+    game.gameObjects.push(new Objective({ id:'obj2',	req:{ obj1:1 },     check:{ memorial:1 }                                }))
+    game.gameObjects.push(new Objective({ id:'obj1',	req:{ obj0:1 },     check:{ hut:2, hunter:1 }                           }))
+    game.gameObjects.push(new Objective({ id:'obj0',	                    check:{ hut:1 }                                     }))
 
     //--- Houses
     
@@ -64,6 +64,7 @@ function loadDataWorld1() {
         }
     }
 
+    game.gameObjects.push(new House({ id:'thatchedHouse',   req:{ thatchedHouses:1 },   cost:{ gold:160, good:300 },    build:{ time:15 },	using:{ land:4, happiness:27 },	gain:{ pop:27 },	prod:{ gold:0.009 } }))
     game.gameObjects.push(new House({ id:'stiltHouse',	    req:{ stiltHouses:1 },      cost:{ gold:40, good:150 },	    build:{ time:15 },	using:{ land:4, happiness:22 },	gain:{ pop:22 },	prod:{ gold:0.012 } }))
     game.gameObjects.push(new House({ id:'hut',	                                        cost:{ good:60 },	            build:{ time:5 },	using:{ land:4, happiness:14 },	gain:{ pop:14 },	prod:{ gold:0.02 } }))
     
@@ -87,6 +88,7 @@ function loadDataWorld1() {
         }
     }
 
+    game.gameObjects.push(new Deco({ id:'bush',	    req:{ thatchedHouses:1 },   cost:{ gold:20, good:15 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:20 } }))
     game.gameObjects.push(new Deco({ id:'flowers',	req:{ stiltHouses:1 },      cost:{ gold:16, good:26 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:20 } }))
     game.gameObjects.push(new Deco({ id:'memorial',	req:{ obj1:1 },             cost:{ gold:20, good:20 },	build:{ time:2 },	using:{ land:4 },	gain:{ happiness:72 } }))
     
@@ -130,6 +132,7 @@ function loadDataWorld1() {
         }
     }
 
+    game.gameObjects.push(new Tech({ id:'thatchedHouses',   req:{ cultivation:1 },              cost:{ gold:150, good:200 } }))
     game.gameObjects.push(new Tech({ id:'horsebackRiding',  req:{ chalets:1, slingshots:1 },    cost:{ gold:250 }           }))
     game.gameObjects.push(new Tech({ id:'growing',          req:{ chalets:1 },                  cost:{ good:300 }           }))
     game.gameObjects.push(new Tech({ id:'tools',            req:{ construction:1 },             cost:{ good:100 },          gain:{ land:16} }))

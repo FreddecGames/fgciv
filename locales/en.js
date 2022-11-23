@@ -19,6 +19,7 @@ trans.translations["en"] = {
     "units": "Units",
     "territories": "Territories",
     
+    "thatchedHouse": "Thatched House",
     "stiltHouse": "Stilt House",
     "hut": "Hut",
     
@@ -26,6 +27,7 @@ trans.translations["en"] = {
     "pottery": "Pottery",
     "hunter": "Hunter",
     
+    "bush": "Bush",
     "flowers": "Flowers",
     "memorial": "Memorial",
     
@@ -37,6 +39,7 @@ trans.translations["en"] = {
     "dye": "Dye",
     "wine": "Wine",
     
+    "thatchedHouses": "Thatched Houses",
     "horsebackRiding": "Horseback Riding",
     "growing": "Growing",
     "slingshots": "Slingshots",
