@@ -23,7 +23,7 @@
     </head>
     <body>
         <!-- -->
-        <div class="p-2">
+        <div class="container p-2">
             <div class="row gx-2">
                 <!-- -->
                 <div class="col">
@@ -49,184 +49,30 @@
             </div>
         </div>
         <!-- -->
-        <div class="tab-content" style="height:calc(100% - 42px);">
+        <div class="tab-content container p-0 position-relative" style="height:calc(100% - 49.19px);">
             <!-- -->
             <div id="home" class="tab-pane h-100 active">
                 <!-- -->
                 <div id="resources" class="p-2">
                 </div>
                 <!-- -->
-                <div class="tab-content" style="height:calc(100% - 90px);">
-                    <!-- -->
-                    <div id="buildings-pane" class="tab-pane h-100 scrollbar px-2 py-2 active">
-                        <div class="row g-3">
-                            <!-- -->
-                            <div class="col-12">
-                                <span class="h6">Buildings</span>
-                            </div>
-                            <!-- -->
-                            <div class="col-12">
-                                <div class="card card-body">
-                                    <div id="buildingObjects" class="row g-1">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- -->
-                            <div class="col-12">
-                                <div class="nav nav-pills flex-nowrap row g-2" style="overflow-x: auto;">
-                                    <!-- -->
-                                    <div class="nav-item col">
-                                        <button class="nav-link w-100 active" id="decos-tab" data-bs-toggle="tab" data-bs-target="#decos-pane" type="button" role="tab" aria-controls="decos" aria-selected="true">
-                                            Decos
-                                        </button>
-                                    </div>
-                                    <!-- -->
-                                    <div class="nav-item col">
-                                        <button class="nav-link w-100" id="houses-tab" data-bs-toggle="tab" data-bs-target="#houses-pane" type="button" role="tab" aria-controls="houses" aria-selected="false">
-                                            Houses
-                                        </button>
-                                    </div>
-                                    <!-- -->
-                                    <div class="nav-item col">
-                                        <button class="nav-link w-100" id="prods-tab" data-bs-toggle="tab" data-bs-target="#prods-pane" type="button" role="tab" aria-controls="prods" aria-selected="false">
-                                            Prods
-                                        </button>
-                                    </div>
-                                    <!-- -->
-                                    <div class="nav-item col">
-                                        <button class="nav-link w-100" id="barracks-tab" data-bs-toggle="tab" data-bs-target="#barracks-pane" type="button" role="tab" aria-controls="barracks" aria-selected="false">
-                                            Barracks
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- -->
-                            <div class="tab-content col-12">
-                                <!-- -->
-                                <div id="decos-pane" class="tab-pane active">
-                                    <div class="row g-3">
-                                        <div id="decos" class="col-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -->
-                                <div id="houses-pane" class="tab-pane">
-                                    <div class="row g-3">
-                                        <div id="houses" class="col-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -->
-                                <div id="prods-pane" class="tab-pane">
-                                    <div class="row g-3">
-                                        <div id="prods" class="col-12">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -->
-                                <div id="barracks-pane" class="tab-pane">
-                                    <div class="row g-3">
-                                        <div id="barracks" class="col-12">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- -->
-                    <div id="techs-pane" class="tab-pane h-100 scrollbar px-2 py-2">
-                        <div class="row g-3">
-                            <!-- -->
-                            <div class="col-12">
-                                <span class="h6">Techs</span>
-                            </div>
-                            <!-- -->
-                            <div id="techs" class="col-12">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- -->
-                    <div id="units-pane" class="tab-pane h-100 scrollbar px-2 py-2">
-                        <div class="row g-3">
-                            <!-- -->
-                            <div class="col-12">
-                                <span class="h6">Units</span>
-                            </div>
-                            <!-- -->
-                            <div id="units" class="col-12">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- -->
-                    <div id="territories-pane" class="tab-pane h-100 scrollbar px-2 py-2">
-                        <div class="row g-3">
-                            <!-- -->
-                            <div class="col-12">
-                                <span class="h6">Territories</span>
-                            </div>
-                            <!-- -->
-                            <div id="territories" class="col-12">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- -->
-                    <div id="objectives-pane" class="tab-pane h-100 scrollbar px-2 py-2">
-                        <div class="row g-3">
-                            <!-- -->
-                            <div class="col-12">
-                                <span class="h6">Objectives</span>
-                            </div>
-                            <!-- -->
-                            <div id="objectives" class="col-12">
-                            </div>
-                        </div>
-                    </div>
+                <div id="category-panes" class="tab-content" style="height:calc(100% - 43.2px - 54.8px);">
                 </div>
                 <!-- -->
-                <div class="p-2 border-top">
-                    <div class="nav nav-pills flex-nowrap row g-2" style="overflow-x: auto;">
-                        <!-- -->
-                        <div class="nav-item col">
-                            <button class="nav-link w-100 active" id="city-tab" data-bs-toggle="tab" data-bs-target="#buildings-pane" type="button" role="tab" aria-controls="buildings" aria-selected="true">
-                                <i class="fa-fw fas fa-building"></i>
-                            </button>
-                        </div>
-                        <!-- -->
-                        <div class="nav-item col">
-                            <button class="nav-link w-100" id="tech-tab" data-bs-toggle="tab" data-bs-target="#techs-pane" type="button" role="tab" aria-controls="techs" aria-selected="false">
-                                <i class="fa-fw fas fa-flask"></i>
-                            </button>
-                        </div>
-                        <!-- -->
-                        <div class="nav-item col">
-                            <button class="nav-link w-100" id="army-tab" data-bs-toggle="tab" data-bs-target="#units-pane" type="button" role="tab" aria-controls="units" aria-selected="false">
-                                <i class="fa-fw fas fa-users"></i>
-                            </button>
-                        </div>
-                        <!-- -->
-                        <div class="nav-item col">
-                            <button class="nav-link w-100" id="conquest-tab" data-bs-toggle="tab" data-bs-target="#territories-pane" type="button" role="tab" aria-controls="territories" aria-selected="false">
-                                <i class="fa-fw fas fa-map"></i>
-                            </button>
-                        </div>
-                        <!-- -->
-                        <div class="nav-item col">
-                            <button class="nav-link w-100" id="progress-tab" data-bs-toggle="tab" data-bs-target="#objectives-pane" type="button" role="tab" aria-controls="objectives" aria-selected="false">
-                                <i class="fa-fw fas fa-bullseye"></i>
-                            </button>
-                        </div>
+                <div class="p-2 border-top" style="overflow-x: auto;">
+                    <div id="category-tabs" class="nav nav-pills flex-nowrap row g-2">
                     </div>
                 </div>
             </div>
             <!-- -->
-            <div id="settings" class="tab-pane h-100 border-top">
+            <div id="settings" class="tab-pane h-100">
                 <div class="p-2">
                     <div class="row g-3">
                         <!-- -->
                         <div class="col-12">
                             <div class="row g-2">
                                 <div class="col-12">
-                                    <span class="h5">Settings</span>
+                                    <span class="h6">Settings</span>
                                 </div>
                                 <div class="col-12">
                                     <button type="button" class="btn btn-danger" onclick="clickWipe()">

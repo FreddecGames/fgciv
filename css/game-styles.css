@@ -42,21 +42,14 @@ a { text-decoration: none; }
     --bs-nav-pills-link-active-bg: #f39c12;
 }
 
-.dropdown, .dropdown-center, .dropend, .dropstart, .dropup, .dropup-center {
-    position: initial;
-}
-
 .dropdown-menu {
-    --bs-dropdown-min-width: calc(100% - 1rem);
+    --bs-dropdown-min-width: 15rem;
     --bs-dropdown-padding-x: .5rem;
     --bs-dropdown-padding-y: .5rem;
     --bs-dropdown-font-size: .8rem;
     --bs-dropdown-bg: #22272e;
     --bs-dropdown-color: #adbac7;
     --bs-dropdown-border-color: #f39c12;
-
-    transform: translate3d(0px, 83.5px, 0px)!important;
-    right: .5rem!important; left: .5rem!important;
 }
 
 .btn {
@@ -100,11 +93,11 @@ a { text-decoration: none; }
 .card {
     --bs-card-spacer-y: .5rem;
     --bs-card-spacer-x: .5rem;
-    --bs-card-border-color: #444c56;
-    --bs-card-cap-padding-y: .5rem;
-    --bs-card-cap-padding-x: .5rem;
+    --bs-card-border-color: #343a40;
+    --bs-card-cap-padding-y: .25rem;
+    --bs-card-cap-padding-x: .25rem;
     --bs-card-cap-bg: transparent;
-    --bs-card-bg: transparent;
+    --bs-card-bg: #343a40;
 }
 
 .card-header { border: 0; }
@@ -115,5 +108,5 @@ a { text-decoration: none; }
     --bs-progress-height: 3px;
     --bs-progress-bg: #000;
     
-    width: 75px;
+    width: 55px;
 }

@@ -18,6 +18,8 @@ class GameObject {
             names.forEach(name => { Object.defineProperty(this, name, Object.getOwnPropertyDescriptor(dataToSave, name)) })
         }
 
+        this.unlocks = []
+        
         this.users = []
         this.storers = []
         this.producers = []
@@ -125,19 +127,21 @@ class Game {
         this.worldId = 'world1'
         this.rafHandle = null
         this.timePlayed = 0
-        this.gameObjects = []
         this.saveInterval = null
         this.autoSaveDelay = 30000
         this.resetInProgress = false
         this.lastFrameTimeMs = new Date().getTime()
         this.localStorageName = 'fgciv'
         
+        this.gameObjects = []
+        this.gameCategories = []
+        
         this.resources = []
-        this.buildingObjects = []
-        this.decos = []
         this.houses = []
         this.prods = []
+        this.decos = []
         this.barracks = []
+        this.goods = []
         this.techs = []
         this.units = []
         this.territories = []
@@ -213,7 +217,7 @@ class Game {
                     
                     obj.count += 1
                     obj.status = 'idle'
-                    obj.remainingTime = 0
+                    obj.remainingTime = obj.build.time
                     
                     if (obj.gain) {
                         for (let gainId in obj.gain) {
@@ -232,47 +236,81 @@ class Game {
         ui.findAll('[data-show]').forEach(elem => {
             
             let attr = elem.getAttribute('data-show')
+            let display = elem.style.display
             
-            if (attr == 'unlocked') {
+            let catId = ui.dataset(elem, 'cat')
+            if (catId) {
                 
-                let objId = ui.dataset(elem, 'object')
-                let data = game.obj(objId).count
+                if (attr == 'unlocked') {
+                    
+                    let cat = game.gameCategories.find(elem => elem.id == catId)
+                    let unlocked = true
+                    
+                    if (cat.req) {                    
+                        for (let reqId in cat.req) {
+                            if (game.obj(reqId).count < cat.req[reqId]) {
+                                
+                                unlocked = false
+                                break
+                            }
+                        }
+                    }
 
-                if (game.obj(objId).isUnlocked == true) { elem.style.display = 'block' }
-                else { elem.style.display = 'none' }
+                    if (unlocked == true) { display = 'block' }
+                    else { display = 'none' }
+                }
             }
-            else if (attr == 'unlockedNotBuilt') {
+            else {
                 
                 let objId = ui.dataset(elem, 'object')
-                let data = game.obj(objId).count
-                
-                if (game.obj(objId).isUnlocked == true && data < 1) { elem.style.display = 'block' }
-                else { elem.style.display = 'none' }
-            }
-            else if (attr == 'unlockedBuilt') {
-                
-                let objId = ui.dataset(elem, 'object')
-                let data = game.obj(objId).count
+                if (objId) {
+                    
+                    if (attr == 'unlocked') {
+                        
+                        let data = game.obj(objId).count
 
-                if (game.obj(objId).isUnlocked == true && data > 0) { elem.style.display = 'block' }
-                else { elem.style.display = 'none' }
+                        if (game.obj(objId).isUnlocked == true) { display = 'block' }
+                        else { display = 'none' }
+                    }
+                    else if (attr == 'unlockedNotBuilt') {
+                        
+                        let data = game.obj(objId).count
+                        
+                        if (game.obj(objId).isUnlocked == true && data < 1) { display = 'block' }
+                        else { display = 'none' }
+                    }
+                    else if (attr == 'unlockedBuilt') {
+                        
+                        let data = game.obj(objId).count
+
+                        if (game.obj(objId).isUnlocked == true && data > 0) { display = 'block' }
+                        else { display = 'none' }
+                    }
+                    else if (attr == 'statusIdle') {
+                        
+                        let data = game.obj(objId).status
+                        
+                        if (data == 'idle') { display = 'block' }
+                        else { display = 'none' }
+                    }
+                    else if (attr == 'statusBuilding') {
+                        
+                        let data = game.obj(objId).status
+                        
+                        if (data == 'building') { display = 'block' }
+                        else { display = 'none' }
+                    }
+                    else if (attr == 'tabNoContent') {
+                        
+                        let unlocked = game.gameCategories.find(elem => elem.uiId == objId).objects.filter(elem => elem.isUnlocked == true).filter(elem => !elem.max || elem.count < elem.max)
+                        
+                        if (unlocked.length < 1) { display = 'block' }
+                        else { display = 'none' }
+                    }
+                }
             }
-            else if (attr == 'statusIdle') {
-                
-                let objId = ui.dataset(elem, 'object')
-                let data = game.obj(objId).status
-                
-                if (data == 'idle') { elem.style.display = 'block' }
-                else { elem.style.display = 'none' }
-            }
-            else if (attr == 'statusBuilding') {
-                
-                let objId = ui.dataset(elem, 'object')
-                let data = game.obj(objId).status
-                
-                if (data == 'building') { elem.style.display = 'block' }
-                else { elem.style.display = 'none' }
-            }
+            
+            if (elem.style.display != display) { elem.style.display = display }
         })
         
         //--- enabling/disabling buttons
@@ -280,32 +318,14 @@ class Game {
         ui.findAll('[data-check]').forEach(elem => {
             
             let attr = elem.getAttribute('data-check')
+            let objId = ui.dataset(elem, 'object')            
+            let disabled = elem.disabled
             
-            if (attr == 'canBuild') {
-                
-                let objId = ui.dataset(elem, 'object')
-                elem.disabled = !canBuild(objId)
-            }
-            else if (attr == 'canDelete') {
-                
-                let objId = ui.dataset(elem, 'object')
-                elem.disabled = !canDelete(objId)
-            }
-            else if (attr == 'canCheck') {
-                
-                let objId = ui.dataset(elem, 'object')
-                elem.disabled = !canCheck(objId)
-            }
-            else if (attr == 'canAssign') {
-                
-                let objId = ui.dataset(elem, 'object')
-                elem.disabled = !canAssign(objId)
-            }
-            else if (attr == 'canUnassign') {
-                
-                let objId = ui.dataset(elem, 'object')
-                elem.disabled = !canUnassign(objId)
-            }
+            if (attr == 'canBuild') { disabled = !canBuild(objId) }
+            else if (attr == 'canDelete') { disabled = !canDelete(objId) }
+            else if (attr == 'canCheck') { disabled = !canCheck(objId) }
+            
+            if (elem.disabled != disabled) { elem.disabled = disabled }
         })
         
         //--- displaying data
@@ -319,64 +339,89 @@ class Game {
                 
                 let data = Math.round(game.obj(objId).count + Number.EPSILON)
                 
-                if (data > 0) { elem.innerHTML = '<span class="text-white">' + data + '</span>' }
-                else { elem.innerHTML = data }
+                let html = ''
+                if (data > 0) { html = '<span class="text-white">' + data + '</span>' }
+                else { html = data }
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
             else if (attr == 'stock') {
                 
                 let data = Math.round(game.obj(objId).stock + Number.EPSILON)
-                elem.innerHTML = data
+                
+                let html = data
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
-            if (attr == 'availableCount') {
+            else if (attr == 'availableCount') {
                 
                 let data = Math.round(game.obj(objId).availableCount + Number.EPSILON)
                 
-                if (data > 0) { elem.innerHTML = '<span class="text-white">' + data + '</span>' }
-                else { elem.innerHTML = data }
+                let html = ''
+                if (data > 0) { html = '<span class="text-white">' + data + '</span>' }
+                else { html = '' + data }
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
             else if (attr == 'production') {
                 
                 let data = Math.round((game.obj(objId).production + Number.EPSILON) * 1000) / 1000
                 
-                if (data > 0) { elem.innerHTML = '<span class="text-success">+' + data + ' <small class="opacity-50">/s</small></span>' }
-                else if (data < 0) { elem.innerHTML = '<span class="text-danger">' + data + ' <small class="opacity-50">/s</small></span>' }
-                else { elem.innerHTML = '<span>' + data + ' <small class="opacity-50">/s</small></span>' }
+                let html = ''
+                if (data > 0) { html = '<span class="text-success">+' + data + ' <small class="opacity-50">/s</small></span>' }
+                else if (data < 0) { html = '<span class="text-danger">' + data + ' <small class="opacity-50">/s</small></span>' }
+                else { html = '<span>' + data + ' <small class="opacity-50">/s</small></span>' }
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
             else if (attr == 'cost') {
 
                 let value = elem.getAttribute('data-value')
                 let data = Math.round(game.obj(objId).cost[value] + Number.EPSILON)
-
-                if (data > game.obj(value).count) { elem.className = 'text-danger' }
-                else { elem.className = 'text-success' }
+                
+                let className = ''
+                if (data > game.obj(value).count) { className = 'text-danger' }
+                else { className = 'text-success' }
+                
+                if (elem.className != className) { elem.className = className }
             }
             else if (attr == 'using') {
 
                 let value = elem.getAttribute('data-value')
                 let data = Math.round(game.obj(objId).using[value] + Number.EPSILON)
 
-                if (data > game.obj(value).availableCount) { elem.className = 'text-danger' }
-                else { elem.className = 'text-success' }
+                let className = ''
+                if (data > game.obj(value).availableCount) { className = 'text-danger' }
+                else { className = 'text-success' }
+                
+                if (elem.className != className) { elem.className = className }
             }
             else if (attr == 'remainingTime') {
                 
                 let data = game.obj(objId).remainingTime
                 
-                elem.innerHTML = formatTime(data)
+                let html = formatTime(data)
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
             else if (attr == 'progress') {
 
                 let data = game.obj(objId).buildingProgress
 
-                elem.innerHTML = '<div class="progress-bar bg-success" role="progressbar" style="width:' + data + '%" aria-valuenow="' + data + '" aria-valuemin="0" aria-valuemax="100"></div>'
+                let html = '<div class="progress-bar bg-success" role="progressbar" style="width:' + data + '%" aria-valuenow="' + data + '" aria-valuemin="0" aria-valuemax="100"></div>'
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
             else if (attr == 'usage') {
                 
                 let data = Math.round(game.obj(objId).usage + Number.EPSILON)
                 
-                if (data >= game.obj(objId).count) { elem.innerHTML = '<span class="text-danger">' + data + '</span>' }
-                else if (data > 0) { elem.innerHTML = '<span class="text-white">' + data + '</span>' }
-                else { elem.innerHTML = data }
+                let html = ''
+                if (data >= game.obj(objId).count) { html = '<span class="text-danger">' + data + '</span>' }
+                else if (data > 0) { html = '<span class="text-white">' + data + '</span>' }
+                else { html = data }
+                
+                if (elem.innerHTML != html) { elem.innerHTML = html }
             }
         })
     }
@@ -451,6 +496,12 @@ class Game {
                     game.obj(usingId).users.push(obj)
                 }
             }
+            
+            if (obj.req) {
+                for (let reqId in obj.req) {
+                    game.obj(reqId).unlocks.push(obj)
+                }
+            }
         })
     }
     
@@ -459,63 +510,51 @@ class Game {
         let html = ''
         
         this.resources = this.gameObjects.filter(obj => { return obj.uiId == 'resources'})
-        html = '<div class="row gx-2">'
+        html = '<div class="row g-2">'
         this.resources.forEach(elem => { html += getHtmlResource(elem) })
         html += '</div>'
         ui.find('#resources').innerHTML = html
         
-        this.buildingObjects = this.gameObjects.filter(obj => { return obj.uiId == 'buildingObjects'})
-        html = ''
-        this.buildingObjects.forEach(elem => { html += getHtmlUsedObject(elem) })
-        ui.find('#buildingObjects').innerHTML = html
-        
-        this.decos = this.gameObjects.filter(obj => { return obj.uiId == 'decos'})
-        html = '<div class="row g-3">'
-        this.decos.forEach(elem => { html += getHtmlBuilding(elem) })
-        html += '</div>'
-        ui.find('#decos').innerHTML = html
-        
-        this.houses = this.gameObjects.filter(obj => { return obj.uiId == 'houses'})
-        html = '<div class="row g-3">'
-        this.houses.forEach(elem => { html += getHtmlBuilding(elem) })
-        html += '</div>'
-        ui.find('#houses').innerHTML = html
-        
-        this.prods = this.gameObjects.filter(obj => { return obj.uiId == 'prods'})
-        html = '<div class="row g-3">'
-        this.prods.forEach(elem => { html += getHtmlBuilding(elem) })
-        html += '</div>'
-        ui.find('#prods').innerHTML = html
-        
-        this.barracks = this.gameObjects.filter(obj => { return obj.uiId == 'barracks'})
-        html = '<div class="row g-3">'
-        this.barracks.forEach(elem => { html += getHtmlBuilding(elem) })
-        html += '</div>'
-        ui.find('#barracks').innerHTML = html
-        
-        this.techs = this.gameObjects.filter(obj => { return obj.uiId == 'techs'})
-        html = '<div class="row g-3">'
-        this.techs.forEach(elem => { html += getHtmlTech(elem) })
-        html += '</div>'
-        ui.find('#techs').innerHTML = html
-        
-        this.units = this.gameObjects.filter(obj => { return obj.uiId == 'units'})
-        html = '<div class="row g-3">'
-        this.units.forEach(elem => { html += getHtmlUnit(elem) })
-        html += '</div>'
-        ui.find('#units').innerHTML = html
-        
-        this.territories = this.gameObjects.filter(obj => { return obj.uiId == 'territories'})
-        html = '<div class="row g-3">'
-        this.territories.forEach(elem => { html += getHtmlTerritory(elem) })
-        html += '</div>'
-        ui.find('#territories').innerHTML = html
-        
-        this.objectives = this.gameObjects.filter(obj => { return obj.uiId == 'objectives'})
-        html = '<div class="row g-3">'
-        this.objectives.forEach(elem => { html += getHtmlObjective(elem) })
-        html += '</div>'
-        ui.find('#objectives').innerHTML = html
+        this.gameCategories.forEach(category => {
+            
+            html = '<div class="nav-item col" data-show="unlocked" data-cat="' + category.id + '">'
+                html += '<button class="nav-link w-100 ' + (category.default ? 'active' : '') + '" id="' + category.uiId + '-tab" data-bs-toggle="tab" data-bs-target="#' + category.uiId + '-pane" type="button" role="tab" aria-controls="' + category.uiId + '" aria-selected="' + (category.default ? 'true' : 'false') + '">'
+                    html += '<i class="fa-fw fas fa-' + category.tabIcon + '"></i>'
+                html += '</button>'
+            html += '</div>'
+            ui.find('#category-tabs').innerHTML += html
+            
+            html = '<div id="' + category.uiId + '-pane" class="tab-pane h-100 scrollbar px-2 py-2 ' + (category.default ? 'active' : '') + '">'
+                html += '<div class="row g-2">'
+                    html += '<div class="col-12">'
+                        html += '<span class="h6">' + trans.translate(category.uiId) + '</span>'
+                    html += '</div>'
+                    html += '<div id="' + category.uiId + '" class="col-12"></div>'
+                    if (category.displayDone == true) { html += '<div id="done' + category.uiId + '" class="col-12"></div>' }
+                html += '</div>'
+            html += '</div>'
+            ui.find('#category-panes').innerHTML += html
+            
+            category.objects = this.gameObjects.filter(obj => { return obj.uiId == category.uiId })
+            
+            html = '<div class="row g-2">'
+                html += '<div class="col-12" data-object="' + category.uiId + '" data-show="tabNoContent"><span class="opacity-50">Nothing available for the moment</span></div>'
+            category.objects.forEach(elem => {
+                
+                if (category.uiId == 'objectives') { html += getHtmlObjective(elem) }
+                else { html += getHtmlBuildable(elem, category.buildIcon) }
+            })
+            html += '</div>'
+            ui.find('#' + category.uiId).innerHTML = html
+            
+            if (category.displayDone == true) {
+                
+                html = '<div class="mt-2 row g-2">'
+                category.objects.forEach(elem => { html += getHtmlDone(elem) })
+                html += '</div>'
+                ui.find('#done' + category.uiId).innerHTML = html
+            }
+        })        
     }
 }
 
@@ -551,13 +590,44 @@ function formatTime(time) {
     return format
 }
 
+function getIcon(obj) {
+    
+    let cat = game.gameCategories.find(elem => elem.uiId == obj.uiId)
+    return '<i class="fa-fw fas fa-' + cat.tabIcon + '"></i>'
+}
+
+function getHtmlUnlocks(unlocks) {
+    
+    let html = ''
+    
+    html += '<div class="col-12">'
+        html += '<div class="row g-1">'
+            html += '<div class="col-12">Unlocks</div>'
+            unlocks.forEach(unlock => {
+                html += '<div class="col-12">'
+                    html += '<div class="row gx-1">'
+                        html += '<div class="col-auto">'
+                            html += getIcon(unlock)
+                        html += '</div>'
+                        html += '<div class="col-auto">'
+                            html += '<span class="text-white">' + trans.translate(unlock.id) + '</span>'
+                        html += '</div>'
+                    html += '</div>'
+                html += '</div>'
+            })
+        html += '</div>'
+    html += '</div>'
+    
+    return html
+}
+
 function getHtmlProd(prod) {
     
     let html = ''
     
-    html += '<div class="col-auto">'
-        html += '<div class="row gx-2">'
-        html += '<small class="col-auto">Prod</small>'
+    html += '<div class="col-12">'
+        html += '<div class="row gx-2 align-items-baseline">'
+        html += '<span class="col">Prod</span>'
         for (let id in prod) {
             html += '<div class="col-auto">'
                 html += '<div class="row gx-1">'
@@ -580,14 +650,16 @@ function getHtmlGain(gain) {
     
     let html = ''
     
-    html += '<div class="col-auto">'
-        html += '<div class="row gx-2">'
-        html += '<small class="col-auto">Gain</small>'
+    html += '<div class="col-12">'
+        html += '<div class="row gx-2 align-items-baseline">'
+        html += '<span class="col">Gain</span>'
         for (let id in gain) {
             html += '<div class="col-auto">'
                 html += '<div class="row gx-1">'
                     html += '<div class="col-auto">'
-                        html += '<img src="img/' + game.obj(id).img + '" width="16px" />'
+                        let img = game.obj(id).img
+                        if (img) { html += '<img src="img/' + game.obj(id).img + '" width="16px" />' }
+                        else { html += trans.translate(id) }
                     html += '</div>'
                     html += '<div class="col-auto">'
                         html += '<span class="text-success">+' + gain[id] + '</span>'
@@ -605,9 +677,9 @@ function getHtmlStorage(storage) {
     
     let html = ''
     
-    html += '<div class="col-auto">'
-        html += '<small>Storage</small>'
-        html += '<div class="row gx-2">'
+    html += '<div class="col-12">'
+        html += '<div class="row gx-2 align-items-baseline">'
+        html += '<span class="col">Storage</span>'
         for (let id in storage) {
             html += '<div class="col-auto">'
                 html += '<div class="row gx-1">'
@@ -630,9 +702,9 @@ function getHtmlUsing(using) {
     
     let html = ''
     
-    html += '<div class="col-auto">'
-        html += '<div class="row gx-2">'
-        html += '<small class="col-auto">Using</small>'
+    html += '<div class="col-12">'
+        html += '<div class="row gx-2 align-items-baseline">'
+        html += '<span class="col">Using</span>'
         for (let id in using) {
             html += '<div class="col-auto">'
                 html += '<div class="row gx-1">'
@@ -655,14 +727,16 @@ function getHtmlCost(cost) {
     
     let html = ''
     
-    html += '<div class="col-auto">'
-        html += '<div class="row gx-2">'
-        html += '<small class="col-auto">Cost</small>'
+    html += '<div class="col-12">'
+        html += '<div class="row gx-2 align-items-baseline">'
+        html += '<span class="col">Cost</span>'
             for (let id in cost) {
                 html += '<div class="col-auto">'
                     html += '<div class="row gx-1">'
                         html += '<div class="col-auto">'
-                            html += '<img src="img/' + game.obj(id).img + '" width="16px" />'
+                            let img = game.obj(id).img
+                            if (img) { html += '<img src="img/' + game.obj(id).img + '" width="16px" />' }
+                            else { html += trans.translate(id) }
                         html += '</div>'
                         html += '<div class="col-auto">'
                             html += '<span data-display="cost" data-value="' + id + '">' + cost[id] + '</span>'
@@ -676,46 +750,37 @@ function getHtmlCost(cost) {
     return html
 }
 
-function getHtmlBuild(obj, btnLabel) {
+function getBtnBuild(obj, btnIcon) {
     
     let html = ''
     
-    html += '<div class="col-12" data-show="statusIdle">'
-        html += '<div class="row gx-2 align-items-center justify-content-end">'
-            if (obj.build.time) {
-                html += '<div class="col-auto">'
-                    html += '<span>' + formatTime(obj.build.time) + '</span>'
-                html += '</div>'
-            }
-            html += '<div class="col-auto">'
-                html += '<button type="button" class="btn btn-primary" data-check="canBuild" onclick="clickBuild(\'' + obj.id + '\')">'
-                    html += btnLabel
-                html += '</button>'
-            html += '</div>'
-        html += '</div>'
-    html += '</div>'
-    html += '<div class="col-12" data-show="statusBuilding">'
-        html += '<div class="row gx-2 align-items-center">'
+    html += '<div class="row gx-2 align-items-center justify-content-end">'
+        if (obj.build.time) {
             html += '<div class="col-auto d-flex flex-column align-items-end">'
                 html += '<div class="mb-1"><span data-display="remainingTime"></span></div>'
                 html += '<div class="progress" data-display="progress"></div>'
             html += '</div>'
-            html += '<div class="col-auto">'
-                html += '<button type="button" class="btn btn-danger" data-check="canCancel" onclick="clickCancel(\'' + obj.id + '\')">'
-                    html += 'Cancel'
-                html += '</button>'
-            html += '</div>'
+        }
+        html += '<div class="col-auto" data-show="statusIdle">'
+            html += '<button type="button" class="btn btn-primary px-2" data-check="canBuild" onclick="clickBuild(\'' + obj.id + '\')">'
+                html += '<i class="fa-fw fas fa-' + btnIcon + '"></i>'
+            html += '</button>'
+        html += '</div>'
+        html += '<div class="col-auto" data-show="statusBuilding">'
+            html += '<button type="button" class="btn btn-danger px-2" data-check="canCancel" onclick="clickCancel(\'' + obj.id + '\')">'
+                html += '<i class="fa-fw fas fa-times-circle"></i>'
+            html += '</button>'
         html += '</div>'
     html += '</div>'
     
     return html
 }
 
-function getHtmlDelete(obj, btnLabel) {
+function getBtnDelete(obj, btnLabel) {
     
     let html = ''
     
-    html += '<div class="col-12" data-show="statusIdle">'
+    html += '<div class="col-12 mt-2">'
         html += '<div class="row gx-2 align-items-center">'
             html += '<div class="col-auto">'
                 html += '<button type="button" class="btn btn-danger" data-check="canDelete" onclick="clickDelete(\'' + obj.id + '\')">'
@@ -728,17 +793,15 @@ function getHtmlDelete(obj, btnLabel) {
     return html
 }
 
-function getHtmlCheck(obj, btnLabel) {
+function getBtnCheck(obj, btnLabel) {
     
     let html = ''
     
-    html += '<div class="col-12">'
-        html += '<div class="row gx-2 justify-content-end">'
-            html += '<div class="col-auto">'
-                html += '<button type="button" class="btn btn-primary" data-check="canCheck" onclick="clickCheck(\'' + obj.id + '\')">'
-                    html += btnLabel
-                html += '</button>'
-            html += '</div>'
+    html += '<div class="row gx-2 justify-content-end">'
+        html += '<div class="col-auto">'
+            html += '<button type="button" class="btn btn-primary" data-check="canCheck" onclick="clickCheck(\'' + obj.id + '\')">'
+                html += btnLabel
+            html += '</button>'
         html += '</div>'
     html += '</div>'
     
@@ -747,189 +810,117 @@ function getHtmlCheck(obj, btnLabel) {
 
 //---
 
-function getHtmlUsedObject(obj) {
-    
-    let html = ''
-    
-    html += '<div class="row gx-2 align-items-baseline" data-object="' + obj.id + '">'
-        html += '<div class="col-auto">'
-            html += '<img src="img/' + obj.img + '" width="16px" />'
-        html += '</div>'
-        html += '<div class="col">'
-            html += '<span class="fw-bold">' + trans.translate(obj.id) + '</span>'
-        html += '</div>'
-        html += '<div class="col-auto">'
-            html += '<span data-display="usage"></span>'
-            html += '<small class="opacity-50"> /<span data-display="count"></span></small>'
-        html += '</div>'
-    html += '</div>'
-
-    return html
-}
-
 function getHtmlResource(resource) {
     
     let html = ''
     
     html += '<div class="col" data-object="' + resource.id + '">'
         html += '<div class="dropdown">'
-            html += '<button class="w-100 btn px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">'
-                html += '<div class="row g-2">'
-                    html += '<div class="col-auto">'
+            html += '<button class="w-100 btn px-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">'
+                html += '<div class="row g-1 lh-1">'
+                    html += '<div class="col-12 text-center">'
                         html += '<img src="img/' + resource.img + '" width="16px" />'
                     html += '</div>'
-                    html += '<div class="col text-end">'
-                        html += '<span data-display="availableCount"></span>'
+                    html += '<div class="col-12 text-center">'
+                        html += '<small data-display="availableCount"></small>'
                     html += '</div>'
                 html += '</div>'
             html += '</button>'
             html += '<div class="dropdown-menu">'
-                html += '<div class="row g-2">'
-                    html += '<div class="col-12">'
+                html += '<div class="row g-1">'
+                    html += '<div class="col-12 pb-2 border-bottom">'
                         html += '<div class="row gx-2">'
                             html += '<div class="col-auto">'
                                 html += '<img src="img/' + resource.img + '" width="16px" />'
                             html += '</div>'
                             html += '<div class="col">'
-                                html += '<span class="h6">' + trans.translate(resource.id) + '</span>'
+                                html += '<span class="fw-semibold">' + trans.translate(resource.id) + '</span>'
                             html += '</div>'
                         html += '</div>'
                     html += '</div>'
+                    if (resource.users.length > 0) {
+                        html += '<div class="col-12">'
+                            html += '<div class="row gx-2">'
+                                html += '<div class="col">'
+                                    html += '<span>Available count</span>'
+                                html += '</div>'
+                                html += '<div class="col-auto">'
+                                    html += '<span data-display="availableCount">' + resource.availableCount + '</span>'
+                                html += '</div>'
+                            html += '</div>'
+                        html += '</div>'
+                    }
                     html += '<div class="col-12">'
-                        html += '<div class="row g-1">'
-                            html += '<div class="col-12">'
-                                html += '<div class="row gx-2">'
-                                    html += '<div class="col">'
-                                        html += '<span>Total count</span>'
-                                    html += '</div>'
-                                    html += '<div class="col-auto">'
-                                        html += '<span data-display="count"></span>'
-                                    html += '</div>'
-                                html += '</div>'
+                        html += '<div class="row gx-2">'
+                            html += '<div class="col">'
+                                html += '<span>Total count</span>'
                             html += '</div>'
-                            html += '<div class="col-12">'
-                                html += '<div class="row gx-2">'
-                                    html += '<div class="col">'
-                                        html += '<span>Current production</span>'
-                                    html += '</div>'
-                                    html += '<div class="col-auto">'
-                                        html += '<span data-display="production"></span>'
-                                    html += '</div>'
-                                html += '</div>'
+                            html += '<div class="col-auto">'
+                                html += '<span data-display="count">' + resource.count + '</span>'
                             html += '</div>'
                         html += '</div>'
                     html += '</div>'
-                html += '</div>'
-            html += '</div>'
-        html += '</div>'
-    html += '</div>'
-
-    return html
-}
-
-function getHtmlBuilding(building) {
-    
-    let html = ''
-    
-    html += '<div class="col-12" data-show="unlocked" data-object="' + building.id + '">'
-        html += '<div class="card">'
-            html += '<div class="card-header">'
-                html += '<div class="row gx-2 align-items-baseline">'
-                    html += '<div class="col">'
-                        html += '<span class="h6">' + trans.translate(building.id) + '</span>'
-                    html += '</div>'
-                    html += '<div class="col-auto">'
-                        html += '<span><small class="opacity-50">x</small> <span data-display="count"></span></span>'
-                    html += '</div>'
-                html += '</div>'
-            html += '</div>'
-            html += '<div class="card-body py-0">'
-                html += '<div class="row gx-3">'
-                    if (building.gain) { html += getHtmlGain(building.gain) }
-                    if (building.storage) { html += getHtmlStorage(building.storage) }
-                    if (building.prod) { html += getHtmlProd(building.prod) }
-                html += '</div>'
-                html += '<div class="row gx-3">'
-                    if (building.using) { html += getHtmlUsing(building.using) }
-                    if (building.cost) { html += getHtmlCost(building.cost) }
-                html += '</div>'
-            html += '</div>'
-            if (building.build) { 
-                html += '<div class="card-footer">'
-                    html += '<div class="row gx-2 align-items-center">'
-                        html += '<div class="col">'
-                            html += getHtmlDelete(building, 'Delete')
+                    if (resource.producers.length > 0) {
+                        html += '<div class="col-12">'
+                            html += '<div class="row gx-2">'
+                                html += '<div class="col">'
+                                    html += '<span>Current production</span>'
+                                html += '</div>'
+                                html += '<div class="col-auto">'
+                                    html += '<span data-display="production">' + resource.production + '</span>'
+                                html += '</div>'
+                            html += '</div>'
                         html += '</div>'
-                        html += '<div class="col-auto">'
-                            html += getHtmlBuild(building, 'Build')
+                    }
+                html += '</div>'
+            html += '</div>'
+        html += '</div>'
+    html += '</div>'
+
+    return html
+}
+
+function getHtmlBuildable(buildable, buildIcon) {
+    
+    let html = ''
+    
+    html += '<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3" data-show="' + (buildable.max && buildable.max == 1 ? 'unlockedNotBuilt' : 'unlocked') + '" data-object="' + buildable.id + '">'
+        html += '<div class="card card-body">'
+            html += '<div class="row gx-2 align-items-center flex-nowrap">'
+                html += '<div class="col-auto">'
+                    html += '<div class="dropdown">'
+                        html += '<button class="w-100 btn px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">'
+                            html += '<i class="fa-fw fas fa-info-circle"></i>'
+                        html += '</button>'
+                        html += '<div class="dropdown-menu">'
+                            html += '<div class="row g-1">'
+                                html += '<div class="col-12 pb-2 border-bottom">'
+                                    html += '<span class="fw-semibold">' + getIcon(buildable) + ' ' + trans.translate(buildable.id) + '</span>'
+                                html += '</div>'
+                                if (buildable.gain) { html += getHtmlGain(buildable.gain) }
+                                if (buildable.storage) { html += getHtmlStorage(buildable.storage) }
+                                if (buildable.prod) { html += getHtmlProd(buildable.prod) }
+                                if (buildable.using) { html += getHtmlUsing(buildable.using) }
+                                if (buildable.cost) { html += getHtmlCost(buildable.cost) }
+                                if (buildable.unlocks.length > 0) { html += getHtmlUnlocks(buildable.unlocks) }
+                                if (buildable.deletable) { html += getBtnDelete(buildable, 'Delete') }
+                            html += '</div>'
                         html += '</div>'
                     html += '</div>'
                 html += '</div>'
-            }
-        html += '</div>'
-    html += '</div>'
-    
-    return html
-}
-
-function getHtmlTech(tech) {
-    
-    let html = ''
-    
-    html += '<div class="col-12" data-show="unlockedNotBuilt" data-object="' + tech.id + '">'
-        html += '<div class="card">'
-            html += '<div class="card-header">'
-                html += '<div class="row gx-2 align-items-center">'
-                    html += '<div class="col">'
-                        html += '<span class="h6">' + trans.translate(tech.id) + '</span>'
-                    html += '</div>'
+                html += '<div class="col text-truncate">'
+                    html += '<span class="fw-semibold">' + trans.translate(buildable.id) + '</span>'
                 html += '</div>'
-            html += '</div>'
-            if (tech.cost) {
-                html += '<div class="card-body py-0">'
-                    html += '<div class="row gx-3">'
-                        html += getHtmlCost(tech.cost)
-                    html += '</div>'
-                html += '</div>'
-            }
-            html += '<div class="card-footer">'
-                html += '<div class="row gx-2 justify-content-end">'
+                if (!buildable.max || buildable.max > 1) {
                     html += '<div class="col-auto">'
-                        html += getHtmlBuild(tech, 'Research')
+                        html += '<span><small class="opacity-50">x</small> <span data-display="count">' + buildable.count + '</span></span>'
                     html += '</div>'
+                }
+                html += '<div class="col-auto">'
+                    html += getBtnBuild(buildable, buildIcon)
                 html += '</div>'
             html += '</div>'
         html += '</div>'
-    html += '</div>'
-    html += '<div class="col-12" data-show="unlockedBuilt" data-object="' + tech.id + '">'
-        html += '<div class="row gx-2 align-items-center">'
-            html += '<div class="col">'
-                html += '<span class="fw-bold">' + trans.translate(tech.id) + '</span>'
-            html += '</div>'
-            html += '<div class="col-auto">'
-                html += '<span class="text-success"><i class="fa-fw fas fa-check-circle"></i></span>'
-            html += '</div>'
-        html += '</div>'
-    html += '</div>'
-    
-    return html
-}
-
-function getHtmlUnit(unit) {
-    
-    let html = ''
-    
-    html += '<div class="col-12" data-show="unlockedOrExist" data-object="' + unit.id + '">'
-    html += '</div>'
-    
-    return html
-}
-
-function getHtmlTerritory(territory) {
-    
-    let html = ''
-    
-    html += '<div class="col-12" data-show="unlockedNotBuilt" data-object="' + territory.id + '">'
     html += '</div>'
     
     return html
@@ -939,42 +930,58 @@ function getHtmlObjective(objective) {
     
     let html = ''
     
-    html += '<div class="col-12" data-show="unlockedNotBuilt" data-object="' + objective.id + '">'
-        html += '<div class="card">'
-            html += '<div class="card-header">'
-                html += '<div class="row gx-2 align-items-center">'
-                    html += '<div class="col">'
-                        html += '<span class="h6">' + trans.translate(objective.id) + '</span>'
+    html += '<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3" data-show="unlockedNotBuilt" data-object="' + objective.id + '">'
+        html += '<div class="card card-body">'
+            html += '<div class="row gx-2 align-items-center">'
+                html += '<div class="col-12 mb-2 pb-2 border-bottom">'
+                    html += '<span class="fw-semibold">' + trans.translate(objective.id) + '</span>'
+                html += '</div>'
+                html += '<div class="col-12 mb-2">'
+                    html += '<span class="fst-italic">' + trans.translate(objective.id + '_desc') + '</span>'
+                html += '</div>'
+                html += '<div class="col-12">'
+                    html += '<div class="row g-1">'
+                        for (let id in objective.check) {
+                            html += '<div class="col-12">'
+                                if (game.obj(id).uiId == 'houses') { html += '<span class="text-white">&bull; Have ' + objective.check[id] + ' ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'prods') { html += '<span class="text-white">&bull; Have ' + objective.check[id] + ' ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'decos') { html += '<span class="text-white">&bull; Have ' + objective.check[id] + ' ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'barracks') { html += '<span class="text-white">&bull; Have ' + objective.check[id] + ' ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'techs') { html += '<span class="text-white">&bull; Research ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'units') { html += '<span class="text-white">&bull; Have ' + objective.check[id] + ' ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                                else if (game.obj(id).uiId == 'territories') { html += '<span class="text-white">&bull; Conquer ' + getIcon(game.obj(id)) + ' ' + trans.translate(id) + '</span>' }
+                            html += '</div>'
+                        }
                     html += '</div>'
                 html += '</div>'
-            html += '</div>'
-            html += '<div class="card-body">'
-                html += '<div class="row g-1">'
-                    for (let id in objective.check) {
-                        html += '<div class="col-12">'
-                            if (game.obj(id).uiId == 'houses') { html += '<span>&middot; Build ' + objective.check[id] + ' ' + trans.translate(id) + '</span>' }
-                            else if (game.obj(id).uiId == 'prods') { html += '<span>&middot; Build ' + objective.check[id] + ' ' + trans.translate(id) + '</span>' }
-                            else if (game.obj(id).uiId == 'techs') { html += '<span>&middot; Research ' + trans.translate(id) + '</span>' }
+                if (objective.gain) { html += '<div class="my-2">' + getHtmlGain(objective.gain) + '</div>' }
+                html += '<div class="col-12">'
+                    html += '<div class="row gx-2 justify-content-end">'
+                        html += '<div class="col-auto">'
+                            html += getBtnCheck(objective, 'Next')
                         html += '</div>'
-                    }
-                html += '</div>'
-            html += '</div>'
-            html += '<div class="card-footer">'
-                html += '<div class="row gx-2 justify-content-end">'
-                    html += '<div class="col-auto">'
-                        html += getHtmlCheck(objective, 'Next')
                     html += '</div>'
                 html += '</div>'
             html += '</div>'
         html += '</div>'
     html += '</div>'
-    html += '<div class="col-12" data-show="unlockedBuilt" data-object="' + objective.id + '">'
-        html += '<div class="row gx-2 align-items-center">'
-            html += '<div class="col">'
-                html += '<span class="fw-bold">' + trans.translate(objective.id) + '</span>'
-            html += '</div>'
-            html += '<div class="col-auto">'
-                html += '<span class="text-success"><i class="fa-fw fas fa-check-circle"></i></span>'
+    
+    return html
+}
+
+function getHtmlDone(obj) {
+    
+    let html = ''
+    
+    html += '<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3" data-show="unlockedBuilt" data-object="' + obj.id + '">'
+        html += '<div class="card card-body opacity-50">'
+            html += '<div class="row gx-2 align-items-center">'
+                html += '<div class="col">'
+                    html += '<span class="fw-semibold">' + trans.translate(obj.id) + '</span>'
+                html += '</div>'
+                html += '<div class="col-auto">'
+                    html += '<span class="text-success"><i class="fa-fw fas fa-check-circle"></i></span>'
+                html += '</div>'
             html += '</div>'
         html += '</div>'
     html += '</div>'
@@ -1063,38 +1070,6 @@ function canDelete(objId) {
     return true
 }
 
-function canAssign(objId) {
-    
-    let obj = game.obj(objId)
-
-    if (obj.isUnlocked == false) { return false }
-    
-    if (obj.count >= obj.stock) { return false }
-    
-    if (obj.using) {
-        
-        let using = obj.using
-        for (let usingId in using) {
-            
-            let usingCount = using[usingId]
-            if (usingCount > game.obj(usingId).availableCount) { return false }
-        }
-    }
-    
-    return true
-}
-
-function canUnassign(objId) {
-    
-    let obj = game.obj(objId)
-
-    if (obj.isUnlocked == false) { return false }
-    
-    if (obj.count < 1) { return false }
-    
-    return true
-}
-
 function canCheck(objId) {
     
     let obj = game.obj(objId)
@@ -1175,41 +1150,16 @@ function clickDelete(objId) {
     }
 }
 
-function clickAssign(count, objId) {
-    if (canAssign(objId) == true) {
-        
-        let obj = game.obj(objId)
-        
-        if (obj.using) {
-            
-            let using = obj.using
-            for (let usingId in using) {
-                
-                let usingCount = using[usingId]
-                count = Math.min(count * usingCount, game.obj(usingId).availableCount)
-            }
-        }
-        
-        count = Math.min(count, obj.stock - obj.count)
-        
-        obj.count += count
-    }
-}
-
-function clickUnassign(count, objId) {
-    if (canUnassign(objId) == true) {
-                
-        let obj = game.obj(objId)
-        
-        count = -Math.min(-count, obj.count)
-        obj.count += count
-    }
-}
-
 function clickCheck(objId) {
     if (canCheck(objId) == true) {
         
         let obj = game.obj(objId)
         obj.count += 1
+        
+        if (obj.gain) {
+            for (let gainId in obj.gain) {
+                game.obj(gainId).count += obj.gain[gainId]
+            }
+        }
     }
 }

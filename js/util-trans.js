@@ -25,7 +25,10 @@
         translate: function(key) {
             
             let ret = trans.translations[trans.locale][key]
-            return ret ? ret : key
+            if (ret) return ret
+            
+            console.log('not translated: ' + key)
+            return key
         },
 	}
 
