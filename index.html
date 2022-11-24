@@ -32,7 +32,7 @@
                 <!-- -->
                 <div class="col">
                     <span class="h4">FG Civ</span>
-                    <small class="ms-2 opacity-50">v0.002</small>
+                    <small class="ms-2 opacity-50">v0.003</small>
                 </div>
                 <!-- -->
                 <div class="col-auto">
@@ -75,7 +75,7 @@
                 <div id="category-panes" class="tab-content" style="height:calc(100% - 43.2px - 54.8px);">
                 </div>
                 <!-- -->
-                <div class="p-2 border-top" style="overflow-x: auto;">
+                <div class="p-2 bg-black border-top border-start border-end rounded-top" style="overflow-x: auto;">
                     <div id="category-tabs" class="nav nav-pills flex-nowrap row g-2">
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                                     <span class="h6">Settings</span>
                                 </div>
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-danger" onclick="clickWipe()">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalWipe">
                                         Wipe Local Data
                                     </button>
                                 </div>
@@ -101,6 +101,37 @@
                 </div>
             </div>
         </div>
+        <!-- -->
+        <div id="modalWipe" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="row g-1">
+                        <div class="col-12 pb-2 mb-1 border-bottom">
+                            <div class="row gx-2 align-items-center">
+                                <div class="col h6 mb-0 text-danger">Wipe Local Data</div>
+                                <div class="col-auto"><button type="button" class="btn px-2" data-bs-dismiss="modal" aria-label="Close"><i class="fa-fw fas fa-times"></i></button></div>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <span class="text-white">You will lost all your progress and your data. Do you want to continue?</span>
+                        </div>
+                        <div class="col-12 mt-3 text-center">
+                            <button type="button" class="btn btn-danger" onclick="clickWipe()">
+                                Wipe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y5FYL5X7FY"></script>
+        <script>
+            window.dataLayer = window.dataLayer || []
+            function gtag(){ dataLayer.push(arguments) }
+            gtag('js', new Date())
+            gtag('config', 'G-Y5FYL5X7FY')
+        </script>
         <!-- -->
         <script src="js/vendor-bootstrap.bundle.min.js"></script>
     </body>

@@ -115,3 +115,10 @@ a { text-decoration: none; }
     
     width: 55px;
 }
+
+.modal {
+    --bs-modal-bg: #343a40;
+    --bs-modal-border-color: #f39c12;
+}
+
+.modal-content { padding: .5rem; }

@@ -24,18 +24,25 @@ trans.translations["en"] = {
     "stiltHouse": "Stilt House",
     "hut": "Hut",
     
+    "blacksmith": "Blacksmith",
     "fruitFarm": "Fruit Farm",
     "pottery": "Pottery",
     "hunter": "Hunter",
     
+    "hedge": "Hedge",
+    "statue": "Statue",
     "bush": "Bush",
     "flowers": "Flowers",
     "memorial": "Memorial",
     
+    "tavern": "Tavern",
+    "school": "School",
     "stoneCircle": "Stone Circle",
     
+    "throwerCamp": "Thrower Camp",
     "warriorBarracks": "Warrior Barracks",
     "horsemanStable": "Horseman Stable",
+    "slingerRange": "Slinger Range",
     "spearfighterBarracks": "Spearfighter Barracks",
     
     "lumbermill": "Lumbermill",
@@ -50,6 +57,13 @@ trans.translations["en"] = {
     "dye": "Dye",
     "wine": "Wine",
     
+    "manuring": "Manuring",
+    "brewing": "Brewing",
+    "siegeWeapons": "Siege Weapons",
+    "paths": "Paths",
+    "craftwork": "Craftwork",
+    "teaching": "Teaching",
+    "smithery": "Smithery",
     "phalanx": "Phalanx",
     "woodwork": "Woodwork",
     "stonework": "Stonework",
@@ -66,9 +80,31 @@ trans.translations["en"] = {
     "spears": "Spears",
     "stiltHouses": "Stilt Houses",
     
+    "stoneThrower": "Stone Thrower",
     "warrior": "Warrior",
     "horseman": "Horseman",
+    "slinger": "Slinger",
     "spearfighter": "Spearfighter",
+    
+    "prov4sector5": "Prov #4 Sector #5",
+    "prov4sector4": "Prov #4 Sector #4",
+    "prov4sector3": "Prov #4 Sector #3",
+    "prov4sector2": "Prov #4 Sector #2",
+    "prov4sector1": "Prov #4 Sector #1",
+    
+    "prov4scout": "Prov #4 Scouting",
+    
+    "prov3sector5": "Prov #3 Sector #5",
+    "prov3sector4": "Prov #3 Sector #4",
+    "prov3sector3": "Prov #3 Sector #3",
+    "prov3sector2": "Prov #3 Sector #2",
+    "prov3sector1": "Prov #3 Sector #1",
+    
+    "prov3scout": "Prov #3 Scouting",
+    
+    "prov2sector3": "Prov #2 Sector #3",
+    "prov2sector2": "Prov #2 Sector #2",
+    "prov2sector1": "Prov #2 Sector #1",
     
     "prov2scout": "Prov #2 Scouting",
     

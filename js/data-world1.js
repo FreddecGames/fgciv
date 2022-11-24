@@ -77,6 +77,7 @@ function loadDataWorld1() {
         }
     }
     
+    game.gameObjects.push(new Prod({ id:'blacksmith',   req:{ smithery:1 },             cost:{ gold:430, good:40 },	    build:{ time:1200 },	using:{ land:4, pop:12 },	prod:{ good:0.009 }     }))
     game.gameObjects.push(new Prod({ id:'fruitFarm',    req:{ cultivation:1 },          cost:{ gold:1750, good:30 },	build:{ time:2400 },	using:{ land:20, pop:50 },	prod:{ good:0.036 }     }))
     game.gameObjects.push(new Prod({ id:'pottery',      req:{ potteryTech:1 },          cost:{ gold:240, good:30 },	    build:{ time:1200 },	using:{ land:12, pop:41 },	prod:{ good:0.014 }     }))
     game.gameObjects.push(new Prod({ id:'hunter',	    req:{ obj0:1 },                 cost:{ gold:96 },	            build:{ time:5 },	    using:{ land:9, pop:28 },	prod:{ good:0.01 }      }))
@@ -89,6 +90,8 @@ function loadDataWorld1() {
         }
     }
 
+    game.gameObjects.push(new Deco({ id:'hedge',	req:{ brewing:1 },          cost:{ gold:72, good:72 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:22 } }))
+    game.gameObjects.push(new Deco({ id:'statue',	req:{ teaching:1 },         cost:{ gold:49, good:49 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:21 } }))
     game.gameObjects.push(new Deco({ id:'bush',	    req:{ thatchedHouses:1 },   cost:{ gold:20, good:15 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:20 } }))
     game.gameObjects.push(new Deco({ id:'flowers',	req:{ stiltHouses:1 },      cost:{ gold:16, good:26 },	build:{ time:5 },	using:{ land:1 },	gain:{ happiness:20 } }))
     game.gameObjects.push(new Deco({ id:'memorial',	req:{ obj1:1 },             cost:{ gold:20, good:20 },	build:{ time:2 },	using:{ land:4 },	gain:{ happiness:72 } }))
@@ -101,6 +104,8 @@ function loadDataWorld1() {
         }
     }
 
+    game.gameObjects.push(new Culture({ id:'tavern',	    req:{ brewing:1 },          cost:{ gold:2900, good:440 },   build:{ time:2400 },    using:{ land:9 },       gain:{ happiness:280 } }))
+    game.gameObjects.push(new Culture({ id:'school',	    req:{ teaching:1 },         cost:{ gold:1500, good:290 },   build:{ time:1800 },    using:{ land:9 },       gain:{ happiness:240 } }))
     game.gameObjects.push(new Culture({ id:'stoneCircle',	req:{ construction:1 },     cost:{ gold:780, good:140 },    build:{ time:600 },     using:{ land:9 },       gain:{ happiness:182 } }))
 
     //--- Barracks
@@ -111,9 +116,11 @@ function loadDataWorld1() {
         }
     }
 
-    game.gameObjects.push(new Barrack({ id:'warriorBarracks',	    req:{ phalanx:1 },          cost:{ gold:850, good:560 },  build:{ time:2400 },	using:{ land:9, pop:47 }, storage:{ warrior:4 } }))
-    game.gameObjects.push(new Barrack({ id:'horsemanStable',	    req:{ horsebackRiding:1 },  cost:{ gold:640, good:420 },  build:{ time:1800 },	using:{ land:9, pop:56 }, storage:{ horseman:4 } }))
-    game.gameObjects.push(new Barrack({ id:'spearfighterBarracks',	req:{ spears:1 },           cost:{ gold:170, good:110 },  build:{ time:20 },	using:{ land:9, pop:26 }, storage:{ spearfighter:4 } }))
+    game.gameObjects.push(new Barrack({ id:'throwerCamp',	        req:{ siegeWeapons:1 },     cost:{ gold:1080, good:700 },   build:{ time:2400 },	using:{ land:9, pop:56 }, storage:{ stoneThrower:4 } }))
+    game.gameObjects.push(new Barrack({ id:'warriorBarracks',	    req:{ phalanx:1 },          cost:{ gold:850, good:560 },    build:{ time:2400 },	using:{ land:9, pop:47 }, storage:{ warrior:4 } }))
+    game.gameObjects.push(new Barrack({ id:'horsemanStable',	    req:{ horsebackRiding:1 },  cost:{ gold:640, good:420 },    build:{ time:1800 },	using:{ land:9, pop:56 }, storage:{ horseman:4 } }))
+    game.gameObjects.push(new Barrack({ id:'slingerRange',	        req:{ slingshots:1 },       cost:{ gold:430 },              build:{ time:1800 },	using:{ land:6, pop:34 }, storage:{ slinger:4 } }))
+    game.gameObjects.push(new Barrack({ id:'spearfighterBarracks',	req:{ spears:1 },           cost:{ gold:170, good:110 },    build:{ time:20 },	    using:{ land:9, pop:26 }, storage:{ spearfighter:4 } }))
     
     //--- Warehouses
     
@@ -151,18 +158,25 @@ function loadDataWorld1() {
         }
     }
 
-    game.gameObjects.push(new Tech({ id:'phalanx',          req:{ horsebackRiding:1, thatchedHouses:1 },    cost:{ good:200 }           }))
-    game.gameObjects.push(new Tech({ id:'woodwork',         req:{ tools:1 },                                cost:{ gold:200, good:100 } }))
-    game.gameObjects.push(new Tech({ id:'stonework',        req:{ tools:1 },                                cost:{ good:500 }           }))
-    game.gameObjects.push(new Tech({ id:'thatchedHouses',   req:{ cultivation:1 },                          cost:{ gold:150, good:200 } }))
-    game.gameObjects.push(new Tech({ id:'horsebackRiding',  req:{ chalets:1, slingshots:1 },                cost:{ gold:250 }           }))
-    game.gameObjects.push(new Tech({ id:'growing',          req:{ chalets:1 },                              cost:{ good:300 }           }))
-    game.gameObjects.push(new Tech({ id:'tools',            req:{ construction:1 },                         cost:{ good:100 },          gain:{ land:16} }))
-    game.gameObjects.push(new Tech({ id:'cultivation',      req:{ theWheel:1, construction:1 },             cost:{ gold:200, good:100 } }))
-    game.gameObjects.push(new Tech({ id:'chalets',          req:{ construction:1 },                         cost:{ gold:100, good:200 } }))
-    game.gameObjects.push(new Tech({ id:'slingshots',       req:{ theWheel:1 },                             cost:{ gold:200 }           }))
+    game.gameObjects.push(new Tech({ id:'manuring',         req:{ teaching:1 },                             cost:{ good:300 },              gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'brewing',          req:{ smithery:1, teaching:1 },                 cost:{ gold:150, good:150 }     }))
+    game.gameObjects.push(new Tech({ id:'siegeWeapons',     req:{ phalanx:1, smithery:1 },                  cost:{ gold:500 }               }))
+    game.gameObjects.push(new Tech({ id:'paths',            req:{ phalanx:1 },                              cost:{ good:100 }               }))
+    game.gameObjects.push(new Tech({ id:'craftwork',        req:{ stonework:1, woodwork:1 },                cost:{ marble:2, lumber:2 },    gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'teaching',         req:{ thatchedHouses:1 },                       cost:{ gold:200, good:50 }      }))
+    game.gameObjects.push(new Tech({ id:'smithery',         req:{ thatchedHouses:1 },                       cost:{ gold:350 }               }))
+    game.gameObjects.push(new Tech({ id:'phalanx',          req:{ horsebackRiding:1, thatchedHouses:1 },    cost:{ good:200 }               }))
+    game.gameObjects.push(new Tech({ id:'woodwork',         req:{ tools:1 },                                cost:{ gold:200, good:100 }     }))
+    game.gameObjects.push(new Tech({ id:'stonework',        req:{ tools:1 },                                cost:{ good:500 }               }))
+    game.gameObjects.push(new Tech({ id:'thatchedHouses',   req:{ cultivation:1 },                          cost:{ gold:150, good:200 }     }))
+    game.gameObjects.push(new Tech({ id:'horsebackRiding',  req:{ chalets:1, slingshots:1 },                cost:{ gold:250 }               }))
+    game.gameObjects.push(new Tech({ id:'growing',          req:{ chalets:1 },                              cost:{ good:300 }               }))
+    game.gameObjects.push(new Tech({ id:'tools',            req:{ construction:1 },                         cost:{ good:100 },              gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'cultivation',      req:{ theWheel:1, construction:1 },             cost:{ gold:200, good:100 }     }))
+    game.gameObjects.push(new Tech({ id:'chalets',          req:{ construction:1 },                         cost:{ gold:100, good:200 }     }))
+    game.gameObjects.push(new Tech({ id:'slingshots',       req:{ theWheel:1 },                             cost:{ gold:200 }               }))
     game.gameObjects.push(new Tech({ id:'construction',     req:{ potteryTech:1, spears:1 }                 }))    
-    game.gameObjects.push(new Tech({ id:'theWheel',         req:{ stiltHouses:1, spears:1 },                                            gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'theWheel',         req:{ stiltHouses:1, spears:1 },                                                gain:{ land:16} }))
     game.gameObjects.push(new Tech({ id:'potteryTech',      req:{ obj10:1 }                                 }))    
     game.gameObjects.push(new Tech({ id:'spears',	        req:{ obj4:1 }                                  }))
     game.gameObjects.push(new Tech({ id:'stiltHouses',	    req:{ obj2:1 }                                  }))
@@ -175,8 +189,10 @@ function loadDataWorld1() {
         }
     }
     
+    game.gameObjects.push(new Unit({ id:'stoneThrower',	req:{ throwerCamp:1 },          cost:{ good:180 },              build:{ time:3600 } }))
     game.gameObjects.push(new Unit({ id:'warrior',	    req:{ warriorBarracks:1 },      cost:{ gold:160 },              build:{ time:3600 } }))
     game.gameObjects.push(new Unit({ id:'horseman',	    req:{ horsemanStable:1 },       cost:{ gold:24, good:100 },     build:{ time:3600 } }))
+    game.gameObjects.push(new Unit({ id:'slinger',	    req:{ slingerRange:1 },         cost:{ gold:60, good:15 },      build:{ time:3600 } }))
     game.gameObjects.push(new Unit({ id:'spearfighter',	req:{ spearfighterBarracks:1 }, cost:{ gold:25, good:25 },      build:{ time:20 } }))
     
     //--- Territories
@@ -186,31 +202,30 @@ function loadDataWorld1() {
             super({ id:data.id, uiId:'territories', req:data.req, cost:data.cost, build:data.build, max:1, gain:data.gain }, { count:0, status:'idle', remainingTime:data.build.time })
         }
     }
-    /*
-    game.gameObjects.push(new Territory({ id:'prov4sector1',	req:{ prov4scout:1 }, cost:{ slinger:2, spearfighter:3 },                               build:{ time:0 }, gain:{ good:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov4sector2',	req:{ prov4scout:1 }, cost:{ spearfighter:1, stoneThrower:2, warrior:3 },               build:{ time:0 }, gain:{ good:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov4sector3',	req:{ prov4scout:1 }, cost:{ horseman:1, slinger:1, spearfighter:2, stoneThrower:1 },   build:{ time:0 }, gain:{ gold:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov4sector4',	req:{ prov4scout:1 }, cost:{ horseman:3, slinger:1, spearfighter:1 },                   build:{ time:0 }, gain:{ good:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov4sector5',	req:{ prov4scout:1 }, cost:{ horseman:1, spearfighter:1, warrior:3 },                   build:{ time:0 }, gain:{ gold:100 } }))
+
+    game.gameObjects.push(new Territory({ id:'prov4sector5',	req:{ prov4sector4:1 },     cost:{ horseman:1, spearfighter:1, warrior:3 },                   build:{ time:0 }, gain:{ gold:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov4sector4',	req:{ prov4sector3:1 },     cost:{ horseman:3, slinger:1, spearfighter:1 },                   build:{ time:0 }, gain:{ good:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov4sector3',	req:{ prov4sector2:1 },     cost:{ horseman:1, slinger:1, spearfighter:2, stoneThrower:1 },   build:{ time:0 }, gain:{ gold:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov4sector2',	req:{ prov4sector1:1 },     cost:{ spearfighter:1, stoneThrower:2, warrior:3 },               build:{ time:0 }, gain:{ good:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov4sector1',	req:{ prov4scout:1 },       cost:{ slinger:2, spearfighter:3 },                               build:{ time:0 }, gain:{ good:100 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov4scout',	    req:{ prov3sector1:1, prov3sector2:1, prov3sector3:1, prov3sector4:1, prov3sector5:1 }, cost:{ gold:30 },	build:{ time:480 } }))
+    game.gameObjects.push(new Territory({ id:'prov4scout',	    req:{ prov3sector5:1 },     cost:{ gold:30 },	                                              build:{ time:480 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov3sector1',	req:{ prov3scout:1 }, cost:{ spearfighter:2, stoneThrower:1, warrior:1 },               build:{ time:0 }, gain:{ gold:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov3sector2',	req:{ prov3scout:1 }, cost:{ slinger:2, warrior:2 },                                    build:{ time:0 }, gain:{ good:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov3sector3',	req:{ prov3scout:1 }, cost:{ spearfighter:1, warrior:3 },                               build:{ time:0 }, gain:{ good:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov3sector4',	req:{ prov3scout:1 }, cost:{ spearfighter:2, warrior:1 },                               build:{ time:0 }, gain:{ gold:100 } }))
-    game.gameObjects.push(new Territory({ id:'prov3sector5',	req:{ prov3scout:1 }, cost:{ horseman:1, warrior:2 },                                   build:{ time:0 }, gain:{ gold:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov3sector5',	req:{ prov3sector4:1 },     cost:{ horseman:1, warrior:2 },                                   build:{ time:0 }, gain:{ gold:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov3sector4',	req:{ prov3sector3:1 },     cost:{ spearfighter:2, warrior:1 },                               build:{ time:0 }, gain:{ gold:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov3sector3',	req:{ prov3sector2:1 },     cost:{ spearfighter:1, warrior:3 },                               build:{ time:0 }, gain:{ good:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov3sector2',	req:{ prov3sector1:1 },     cost:{ slinger:2, warrior:2 },                                    build:{ time:0 }, gain:{ good:100 } }))
+    game.gameObjects.push(new Territory({ id:'prov3sector1',	req:{ prov3scout:1 },       cost:{ spearfighter:2, stoneThrower:1, warrior:1 },               build:{ time:0 }, gain:{ gold:100 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov3scout',	    req:{ prov2sector1:1, prov2sector2:1, prov2sector3:1 },                                 cost:{ gold:20 },	build:{ time:420 } }))
+    game.gameObjects.push(new Territory({ id:'prov3scout',	    req:{ prov2sector3:1 },     cost:{ gold:20 },	                                              build:{ time:420 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov2sector1',	req:{ prov2scout:1 }, cost:{ slinger:1, spearfighter:3 },                               build:{ time:0 }, gain:{ gold:75 } }))
-    game.gameObjects.push(new Territory({ id:'prov2sector2',	req:{ prov2scout:1 }, cost:{ horseman:1, slinger:2, spearfighter:1, warrior:1 },        build:{ time:0 }, gain:{ good:75 } }))
-    game.gameObjects.push(new Territory({ id:'prov2sector3',	req:{ prov2scout:1 }, cost:{ slinger:2, spearfighter:1, warrior:1 },                    build:{ time:0 }, gain:{ gold:75 } }))
-    */
+    game.gameObjects.push(new Territory({ id:'prov2sector3',	req:{ prov2sector2:1 },     cost:{ slinger:2, spearfighter:1, warrior:1 },                    build:{ time:0 }, gain:{ gold:75 } }))
+    game.gameObjects.push(new Territory({ id:'prov2sector2',	req:{ prov2sector1:1 },     cost:{ horseman:1, slinger:2, spearfighter:1, warrior:1 },        build:{ time:0 }, gain:{ good:75 } }))
+    game.gameObjects.push(new Territory({ id:'prov2sector1',	req:{ prov2scout:1 },       cost:{ slinger:1, spearfighter:3 },                               build:{ time:0 }, gain:{ gold:75 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov2scout',	    req:{ prov1sector3:1 },     cost:{ gold:10 },	                        build:{ time:420 } }))
+    game.gameObjects.push(new Territory({ id:'prov2scout',	    req:{ prov1sector3:1 },     cost:{ gold:10 },	                                              build:{ time:420 } }))
     
-    game.gameObjects.push(new Territory({ id:'prov1sector3',	req:{ prov1sector2:1 },     cost:{ spearfighter:2, horseman:1 },        build:{ time:0 }, gain:{ good:65 } }))
-    game.gameObjects.push(new Territory({ id:'prov1sector2',	req:{ prov1sector1:1 },     cost:{ spearfighter:2, horseman:1 },        build:{ time:0 }, gain:{ good:60 } }))
-    game.gameObjects.push(new Territory({ id:'prov1sector1',	req:{ obj6:1 },             cost:{ spearfighter:2 },                    build:{ time:0 }, gain:{ gold:50 } }))    
+    game.gameObjects.push(new Territory({ id:'prov1sector3',	req:{ prov1sector2:1 },     cost:{ spearfighter:2, horseman:1 },                              build:{ time:0 }, gain:{ good:65 } }))
+    game.gameObjects.push(new Territory({ id:'prov1sector2',	req:{ prov1sector1:1 },     cost:{ spearfighter:2, horseman:1 },                              build:{ time:0 }, gain:{ good:60 } }))
+    game.gameObjects.push(new Territory({ id:'prov1sector1',	req:{ obj6:1 },             cost:{ spearfighter:2 },                                          build:{ time:0 }, gain:{ gold:50 } }))    
 }
