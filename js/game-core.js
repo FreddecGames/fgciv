@@ -340,8 +340,8 @@ class Game {
                 let data = Math.round(game.obj(objId).count + Number.EPSILON)
                 
                 let html = ''
-                if (data > 0) { html = '<span class="text-white">' + data + '</span>' }
-                else { html = data }
+                if (data > 0) { html = '<span class="text-white">' + data.toLocaleString() + '</span>' }
+                else { html = data.toLocaleString() }
                 
                 if (elem.innerHTML != html) { elem.innerHTML = html }
             }
@@ -358,8 +358,8 @@ class Game {
                 let data = Math.round(game.obj(objId).availableCount + Number.EPSILON)
                 
                 let html = ''
-                if (data > 0) { html = '<span class="text-white">' + data + '</span>' }
-                else { html = '' + data }
+                if (data > 0) { html = '<span class="text-white">' + data.toLocaleString() + '</span>' }
+                else { html = '' + data.toLocaleString() }
                 
                 if (elem.innerHTML != html) { elem.innerHTML = html }
             }
@@ -368,9 +368,9 @@ class Game {
                 let data = Math.round((game.obj(objId).production + Number.EPSILON) * 1000) / 1000
                 
                 let html = ''
-                if (data > 0) { html = '<span class="text-success">+' + data + ' <small class="opacity-50">/s</small></span>' }
-                else if (data < 0) { html = '<span class="text-danger">' + data + ' <small class="opacity-50">/s</small></span>' }
-                else { html = '<span>' + data + ' <small class="opacity-50">/s</small></span>' }
+                if (data > 0) { html = '<span class="text-success">+' + data.toLocaleString() + ' <small class="opacity-50">/s</small></span>' }
+                else if (data < 0) { html = '<span class="text-danger">' + data.toLocaleString() + ' <small class="opacity-50">/s</small></span>' }
+                else { html = '<span>' + data.toLocaleString() + ' <small class="opacity-50">/s</small></span>' }
                 
                 if (elem.innerHTML != html) { elem.innerHTML = html }
             }
@@ -684,7 +684,9 @@ function getHtmlStorage(storage) {
             html += '<div class="col-auto">'
                 html += '<div class="row gx-1">'
                     html += '<div class="col-auto">'
-                        html += '<img src="img/' + game.obj(id).img + '" width="16px" />'
+                        let img = game.obj(id).img
+                        if (img) { html += '<img src="img/' + game.obj(id).img + '" width="16px" />' }
+                        else { html += trans.translate(id) }
                     html += '</div>'
                     html += '<div class="col-auto">'
                         html += '<span class="text-success">+' + storage[id] + ' <small class="opacity-50">max</small></span>'
@@ -822,19 +824,19 @@ function getHtmlResource(resource) {
                         html += '<img src="img/' + resource.img + '" width="16px" />'
                     html += '</div>'
                     html += '<div class="col-12 text-center">'
-                        html += '<small data-display="availableCount"></small>'
+                        html += '<small class="fw-semibold" data-display="availableCount"></small>'
                     html += '</div>'
                 html += '</div>'
             html += '</button>'
             html += '<div class="dropdown-menu">'
                 html += '<div class="row g-1">'
-                    html += '<div class="col-12 pb-2 border-bottom">'
+                    html += '<div class="col-12 pb-2 mb-1 border-bottom">'
                         html += '<div class="row gx-2">'
                             html += '<div class="col-auto">'
                                 html += '<img src="img/' + resource.img + '" width="16px" />'
                             html += '</div>'
                             html += '<div class="col">'
-                                html += '<span class="fw-semibold">' + trans.translate(resource.id) + '</span>'
+                                html += '<span class="fw-semibold text-white">' + trans.translate(resource.id) + '</span>'
                             html += '</div>'
                         html += '</div>'
                     html += '</div>'
@@ -894,8 +896,11 @@ function getHtmlBuildable(buildable, buildIcon) {
                         html += '</button>'
                         html += '<div class="dropdown-menu">'
                             html += '<div class="row g-1">'
-                                html += '<div class="col-12 pb-2 border-bottom">'
-                                    html += '<span class="fw-semibold">' + getIcon(buildable) + ' ' + trans.translate(buildable.id) + '</span>'
+                                html += '<div class="col-12 pb-2 mb-1 border-bottom">'
+                                    html += '<div class="row gx-2">'
+                                        html += '<div class="col-auto">' + getIcon(buildable) + '</div>'
+                                        html += '<div class="col fw-semibold text-white">' + trans.translate(buildable.id) + '</div>'
+                                    html += '</div>'
                                 html += '</div>'
                                 if (buildable.gain) { html += getHtmlGain(buildable.gain) }
                                 if (buildable.storage) { html += getHtmlStorage(buildable.storage) }
@@ -909,11 +914,14 @@ function getHtmlBuildable(buildable, buildIcon) {
                     html += '</div>'
                 html += '</div>'
                 html += '<div class="col text-truncate">'
-                    html += '<span class="fw-semibold">' + trans.translate(buildable.id) + '</span>'
+                    html += '<span class="fw-semibold text-white">' + trans.translate(buildable.id) + '</span>'
                 html += '</div>'
                 if (!buildable.max || buildable.max > 1) {
                     html += '<div class="col-auto">'
                         html += '<span><small class="opacity-50">x</small> <span data-display="count">' + buildable.count + '</span></span>'
+                        if (buildable.stock != Infinity) {
+                            html += '<span class="opacity-50"> /<span data-display="stock">' + buildable.stock + '</span></span>'
+                        }
                     html += '</div>'
                 }
                 html += '<div class="col-auto">'
@@ -934,7 +942,7 @@ function getHtmlObjective(objective) {
         html += '<div class="card card-body">'
             html += '<div class="row gx-2 align-items-center">'
                 html += '<div class="col-12 mb-2 pb-2 border-bottom">'
-                    html += '<span class="fw-semibold">' + trans.translate(objective.id) + '</span>'
+                    html += '<span class="fw-semibold text-white">' + trans.translate(objective.id) + '</span>'
                 html += '</div>'
                 html += '<div class="col-12 mb-2">'
                     html += '<span class="fst-italic">' + trans.translate(objective.id + '_desc') + '</span>'
@@ -984,8 +992,11 @@ function getHtmlDone(obj) {
                             html += '</button>'
                             html += '<div class="dropdown-menu">'
                                 html += '<div class="row g-1">'
-                                    html += '<div class="col-12 pb-2 border-bottom">'
-                                        html += '<span class="fw-semibold">' + getIcon(obj) + ' ' + trans.translate(obj.id) + '</span>'
+                                    html += '<div class="col-12 pb-2 mb-1 border-bottom">'
+                                        html += '<div class="row gx-2">'
+                                            html += '<div class="col-auto">' + getIcon(obj) + '</div>'
+                                            html += '<div class="col fw-semibold text-white">' + trans.translate(obj.id) + '</div>'
+                                        html += '</div>'
                                     html += '</div>'
                                     if (obj.unlocks.length > 0) { html += getHtmlUnlocks(obj.unlocks) }
                                 html += '</div>'
@@ -1159,6 +1170,16 @@ function clickDelete(objId) {
         let obj = game.obj(objId)
         obj.count -= 1
     
+        if (obj.cost) {
+            
+            let cost = obj.cost
+            for (let costId in cost) {
+                
+                let costCount = cost[costId]
+                game.obj(costId).count += .5 * costCount
+            }
+        }
+        
         if (obj.gain) {
             for (let gainId in obj.gain) {                
                 game.obj(gainId).count -= obj.gain[gainId]

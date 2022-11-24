@@ -14,6 +14,7 @@ trans.translations["en"] = {
     "decos": "Decorations",
     "cultures": "Culture",
     "barracks": "Barracks",
+    "warehouses": "Warehouses",
     "goods": "Manufacturing",
     "techs": "Techs",
     "units": "Units",
@@ -33,12 +34,25 @@ trans.translations["en"] = {
     
     "stoneCircle": "Stone Circle",
     
+    "warriorBarracks": "Warrior Barracks",
     "horsemanStable": "Horseman Stable",
     "spearfighterBarracks": "Spearfighter Barracks",
     
+    "lumbermill": "Lumbermill",
+    "marbleMason": "Marble Mason",
+    "stoneMason": "Stone Mason",
+    "dyeWorks": "Dye Works",
+    "vineyard": "Vineyard",
+    
+    "lumber": "Lumber",
+    "marble": "Marble",
+    "stone": "Stone",
     "dye": "Dye",
     "wine": "Wine",
     
+    "phalanx": "Phalanx",
+    "woodwork": "Woodwork",
+    "stonework": "Stonework",
     "thatchedHouses": "Thatched Houses",
     "horsebackRiding": "Horseback Riding",
     "growing": "Growing",
@@ -51,7 +65,8 @@ trans.translations["en"] = {
     "potteryTech": "Pottery",
     "spears": "Spears",
     "stiltHouses": "Stilt Houses",
-
+    
+    "warrior": "Warrior",
     "horseman": "Horseman",
     "spearfighter": "Spearfighter",
     

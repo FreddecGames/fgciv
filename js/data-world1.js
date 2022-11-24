@@ -24,6 +24,7 @@ function loadDataWorld1() {
     game.gameCategories.push({ id:'decos',          req:{ obj1:1 },                 uiId:'decos',       buildIcon:'plus-circle',    tabIcon:'fan'           })
     game.gameCategories.push({ id:'cultures',       req:{ construction:1 },         uiId:'cultures',    buildIcon:'plus-circle',    tabIcon:'university'    })
     game.gameCategories.push({ id:'barracks',       req:{ obj5:1 },                 uiId:'barracks',    buildIcon:'plus-circle',    tabIcon:'building'      })
+    game.gameCategories.push({ id:'warehouses',     req:{ growing:1 },              uiId:'warehouses',  buildIcon:'plus-circle',    tabIcon:'warehouse'     })
     game.gameCategories.push({ id:'goods',          req:{ growing:1 },              uiId:'goods',       buildIcon:'plus-circle',    tabIcon:'boxes'         })
     game.gameCategories.push({ id:'techs',          req:{ obj2:1 },                 uiId:'techs',       buildIcon:'check-circle',   tabIcon:'flask',        displayDone:true  })
     game.gameCategories.push({ id:'units',          req:{ spearfighterBarracks:1 }, uiId:'units',       buildIcon:'plus-circle',    tabIcon:'users'         })
@@ -106,12 +107,27 @@ function loadDataWorld1() {
     
     class Barrack extends GameObject {        
         constructor(data) {
-            super({ id:data.id, uiId:'barracks', req:data.req, cost:data.cost, build:data.build, using:data.using, deletable:true }, { count:0, status:'idle', remainingTime:data.build.time })
+            super({ id:data.id, uiId:'barracks', req:data.req, cost:data.cost, build:data.build, using:data.using, storage:data.storage, deletable:true }, { count:0, status:'idle', remainingTime:data.build.time })
         }
     }
 
-    game.gameObjects.push(new Barrack({ id:'horsemanStable',	    req:{ horsebackRiding:1 },  cost:{ gold:640, good:420 },  build:{ time:1800 },	using:{ land:9, pop:56 } }))
-    game.gameObjects.push(new Barrack({ id:'spearfighterBarracks',	req:{ spears:1 },           cost:{ gold:170, good:110 },  build:{ time:20 },	using:{ land:9, pop:26 } }))
+    game.gameObjects.push(new Barrack({ id:'warriorBarracks',	    req:{ phalanx:1 },          cost:{ gold:850, good:560 },  build:{ time:2400 },	using:{ land:9, pop:47 }, storage:{ warrior:4 } }))
+    game.gameObjects.push(new Barrack({ id:'horsemanStable',	    req:{ horsebackRiding:1 },  cost:{ gold:640, good:420 },  build:{ time:1800 },	using:{ land:9, pop:56 }, storage:{ horseman:4 } }))
+    game.gameObjects.push(new Barrack({ id:'spearfighterBarracks',	req:{ spears:1 },           cost:{ gold:170, good:110 },  build:{ time:20 },	using:{ land:9, pop:26 }, storage:{ spearfighter:4 } }))
+    
+    //--- Warehouses
+    
+    class Warehouse extends GameObject {        
+        constructor(data) {
+            super({ id:data.id, uiId:'warehouses', req:data.req, cost:data.cost, build:data.build, using:data.using, deletable:true, storage:data.storage }, { count:0, status:'idle', remainingTime:data.build.time })
+        }
+    }
+    
+    game.gameObjects.push(new Warehouse({ id:'lumbermill',	    req:{ woodwork:1 },         cost:{ gold:340, good:490 },  build:{ time:1800 },	using:{ land:9, pop:108 }, storage:{ lumber:6 } }))
+    game.gameObjects.push(new Warehouse({ id:'marbleMason',	    req:{ stonework:1 },        cost:{ gold:340, good:490 },  build:{ time:1800 },	using:{ land:9, pop:108 }, storage:{ marble:6 } }))
+    game.gameObjects.push(new Warehouse({ id:'stoneMason',	    req:{ stonework:1 },        cost:{ gold:340, good:490 },  build:{ time:1800 },	using:{ land:9, pop:108 }, storage:{ stone:6 } }))
+    game.gameObjects.push(new Warehouse({ id:'dyeWorks',	    req:{ growing:1 },          cost:{ gold:340, good:490 },  build:{ time:1800 },	using:{ land:9, pop:108 }, storage:{ dye:6 } }))
+    game.gameObjects.push(new Warehouse({ id:'vineyard',	    req:{ growing:1 },          cost:{ gold:340, good:490 },  build:{ time:1800 },	using:{ land:9, pop:108 }, storage:{ wine:6 } }))
     
     //--- Goods
     
@@ -121,8 +137,11 @@ function loadDataWorld1() {
         }
     }
     
-    game.gameObjects.push(new Good({ id:'dye',	    req:{ growing:1 },  cost:{ gold:100, good:100 },  build:{ time:14400 } }))
-    game.gameObjects.push(new Good({ id:'wine',	    req:{ growing:1 },  cost:{ gold:100, good:100 },  build:{ time:14400 } }))
+    game.gameObjects.push(new Good({ id:'lumber',	req:{ lumbermill:1 },   cost:{ gold:100, good:100 },  build:{ time:14400 } }))
+    game.gameObjects.push(new Good({ id:'marble',	req:{ marbleMason:1 },  cost:{ gold:100, good:100 },  build:{ time:14400 } }))
+    game.gameObjects.push(new Good({ id:'stone',	req:{ stoneMason:1 },   cost:{ gold:100, good:100 },  build:{ time:14400 } }))
+    game.gameObjects.push(new Good({ id:'dye',	    req:{ dyeWorks:1 },     cost:{ gold:100, good:100 },  build:{ time:14400 } }))
+    game.gameObjects.push(new Good({ id:'wine',	    req:{ vineyard:1 },     cost:{ gold:100, good:100 },  build:{ time:14400 } }))
     
     //--- Techs
     
@@ -132,18 +151,21 @@ function loadDataWorld1() {
         }
     }
 
-    game.gameObjects.push(new Tech({ id:'thatchedHouses',   req:{ cultivation:1 },              cost:{ gold:150, good:200 } }))
-    game.gameObjects.push(new Tech({ id:'horsebackRiding',  req:{ chalets:1, slingshots:1 },    cost:{ gold:250 }           }))
-    game.gameObjects.push(new Tech({ id:'growing',          req:{ chalets:1 },                  cost:{ good:300 }           }))
-    game.gameObjects.push(new Tech({ id:'tools',            req:{ construction:1 },             cost:{ good:100 },          gain:{ land:16} }))
-    game.gameObjects.push(new Tech({ id:'cultivation',      req:{ theWheel:1, construction:1 }, cost:{ gold:200, good:100 } }))
-    game.gameObjects.push(new Tech({ id:'chalets',          req:{ construction:1 },             cost:{ gold:100, good:200 } }))
-    game.gameObjects.push(new Tech({ id:'slingshots',       req:{ theWheel:1 },                 cost:{ gold:200 }           }))
-    game.gameObjects.push(new Tech({ id:'construction',     req:{ potteryTech:1, spears:1 }     }))    
-    game.gameObjects.push(new Tech({ id:'theWheel',         req:{ stiltHouses:1, spears:1 },                                gain:{ land:16} }))
-    game.gameObjects.push(new Tech({ id:'potteryTech',      req:{ obj10:1 }                     }))    
-    game.gameObjects.push(new Tech({ id:'spears',	        req:{ obj4:1 }                      }))
-    game.gameObjects.push(new Tech({ id:'stiltHouses',	    req:{ obj2:1 }                      }))
+    game.gameObjects.push(new Tech({ id:'phalanx',          req:{ horsebackRiding:1, thatchedHouses:1 },    cost:{ good:200 }           }))
+    game.gameObjects.push(new Tech({ id:'woodwork',         req:{ tools:1 },                                cost:{ gold:200, good:100 } }))
+    game.gameObjects.push(new Tech({ id:'stonework',        req:{ tools:1 },                                cost:{ good:500 }           }))
+    game.gameObjects.push(new Tech({ id:'thatchedHouses',   req:{ cultivation:1 },                          cost:{ gold:150, good:200 } }))
+    game.gameObjects.push(new Tech({ id:'horsebackRiding',  req:{ chalets:1, slingshots:1 },                cost:{ gold:250 }           }))
+    game.gameObjects.push(new Tech({ id:'growing',          req:{ chalets:1 },                              cost:{ good:300 }           }))
+    game.gameObjects.push(new Tech({ id:'tools',            req:{ construction:1 },                         cost:{ good:100 },          gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'cultivation',      req:{ theWheel:1, construction:1 },             cost:{ gold:200, good:100 } }))
+    game.gameObjects.push(new Tech({ id:'chalets',          req:{ construction:1 },                         cost:{ gold:100, good:200 } }))
+    game.gameObjects.push(new Tech({ id:'slingshots',       req:{ theWheel:1 },                             cost:{ gold:200 }           }))
+    game.gameObjects.push(new Tech({ id:'construction',     req:{ potteryTech:1, spears:1 }                 }))    
+    game.gameObjects.push(new Tech({ id:'theWheel',         req:{ stiltHouses:1, spears:1 },                                            gain:{ land:16} }))
+    game.gameObjects.push(new Tech({ id:'potteryTech',      req:{ obj10:1 }                                 }))    
+    game.gameObjects.push(new Tech({ id:'spears',	        req:{ obj4:1 }                                  }))
+    game.gameObjects.push(new Tech({ id:'stiltHouses',	    req:{ obj2:1 }                                  }))
 
     //--- Units
     
@@ -153,6 +175,7 @@ function loadDataWorld1() {
         }
     }
     
+    game.gameObjects.push(new Unit({ id:'warrior',	    req:{ warriorBarracks:1 },      cost:{ gold:160 },              build:{ time:3600 } }))
     game.gameObjects.push(new Unit({ id:'horseman',	    req:{ horsemanStable:1 },       cost:{ gold:24, good:100 },     build:{ time:3600 } }))
     game.gameObjects.push(new Unit({ id:'spearfighter',	req:{ spearfighterBarracks:1 }, cost:{ gold:25, good:25 },      build:{ time:20 } }))
     
