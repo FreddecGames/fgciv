@@ -27,77 +27,237 @@
     </head>
     <body>
         <!-- -->
-        <div class="container p-2">
-            <div class="row gx-2 align-items-center">
-                <!-- -->
-                <div class="col">
-                    <span class="h4">FG Civ</span>
-                    <small class="ms-2 opacity-50">v0.003</small>
-                </div>
-                <!-- -->
-                <div class="col-auto">
-                    <div class="dropdown">
-                        <button class="w-100 btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-fw fas fa-exclamation-triangle"></i>
-                        </button>
-                        <div class="dropdown-menu border-danger text-end">
-                            <span class="text-danger"><i class="fa-fw fas fa-exclamation-triangle"></i> This game is still in developpement. Bugs and data lost can occur. Play at your own risk.</span>
-                        </div>
+        <div id="screenLoading" class="h-100 w-100 row g-0 align-items-center justify-content-center">
+            <div class="p-3">
+                <div class="row g-3">
+                    <div class="col-12 text-center">
+                        <img src="./logo.png" width="64px" height="64px" />
+                        <div class="mt-1 h4">FG Civ</div>
+                    </div>
+                    <div class="col-12 flicker text-center">
+                        <span class="text-white">Loading game...</span>
                     </div>
                 </div>
-                <!-- -->
-                <div class="col-auto">
-                    <div class="nav nav-pills row g-2">
-                        <!-- -->
-                        <div class="nav-item col-auto">
-                            <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
-                                <i class="fa-fw fas fa-cog"></i>
-                            </button>
+            </div>
+        </div>
+        <!-- -->
+        <div id="screenError" class="h-100 w-100" style="display:none;">
+            <div class="h-100 w-100 scrollbar row g-0 align-items-center justify-content-center">
+                <div class="p-3">
+                    <div class="row g-3">
+                        <div class="col-12 text-center">
+                            <img src="./logo.png" width="64px" height="64px" />
+                            <div class="mt-1 h4">FG Civ</div>
                         </div>
-                        <!-- -->
-                        <div class="nav-item col-auto">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="settings" aria-selected="true">
-                                <i class="fa-fw fas fa-home"></i>
-                            </button>
+                        <div class="col-12 text-center">
+                            <div class="row g-3">
+                                <div class="col-12 text-center">
+                                    <div class="text-danger">An error occured during game loading</div>
+                                    <div id="screenErrorTxt" class="text-danger"></div>
+                                </div>
+                                <div class="col-12">
+                                    <span class="text-normal">To ask for help, you could contact <span class="text-white">Freddec</span> on Discord with following exported data</span>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center">
+                                    <textarea id="screenErrorLocalData" spellcheck="false" rows="5" class="form-control" style="max-width:512px;"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row g-2 flex-wrap justify-content-center">
+                                        <div class="col-auto">
+                                            <button type="button" class="btn" style="width:155px;" onclick="clickExportCopy()">
+                                                <span><i class="fas fa-fw fa-copy"></i></span>
+                                                <span>Copy to clipboard</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn" style="width:155px;" onclick="clickExportDownload()">
+                                                <span><i class="fas fa-fw fa-download"></i></span>
+                                                <span>Download TXT file</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center">
+                                    <a href="https://discord.gg/3UkgeeT9CV" target="_blank" class="btn btn-primary">
+                                        <span><i class="fab fa-fw fa-discord"></i></span>
+                                        <span class="ms-1">Discord</span>
+                                    </a>
+                                </div>
+                                <div class="col-12">
+                                    <span class="text-normal">Or you could wipe your local data to restart the game from the beginning</span>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalWipe">
+                                        <span><i class="fas fa-fw fa-skull"></i></span>
+                                        <span class="ms-1">Wipe Local Data</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- -->
-        <div class="tab-content container p-0 position-relative" style="height:calc(100% - 49.19px);">
+        <div id="screenGame" class="h-100 w-100" style="display:none;">
             <!-- -->
-            <div id="home" class="tab-pane h-100 active">
-                <!-- -->
-                <div id="resources" class="p-2">
-                </div>
-                <!-- -->
-                <div id="category-panes" class="tab-content" style="height:calc(100% - 43.2px - 54.8px);">
-                </div>
-                <!-- -->
-                <div class="p-2 bg-black border-top border-start border-end rounded-top" style="overflow-x: auto;">
-                    <div id="category-tabs" class="nav nav-pills flex-nowrap row g-2">
+            <div class="container p-2">
+                <div class="row gx-2 align-items-center">
+                    <!-- -->
+                    <div class="col-auto">
+                        <img src="./logo.png" width="22px" style="position:relative; top:1px;" />
+                    </div>
+                    <!-- -->
+                    <div class="col text-truncate">
+                        <span class="h4">FG Civ</span>
+                        <small class="ms-2 opacity-50">v0.004</small>
+                    </div>
+                    <!-- -->
+                    <div class="col-auto">
+                        <div class="dropdown-center">
+                            <button class="w-100 btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-fw fas fa-exclamation-triangle"></i>
+                            </button>
+                            <div class="dropdown-menu border-danger text-center">
+                                <span class="text-danger"><i class="fa-fw fas fa-exclamation-triangle"></i> This game is still in developpement. Bugs and data lost can occur. Play at your own risk.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div class="col-auto">
+                        <div class="nav nav-pills row g-2">
+                            <!-- -->
+                            <div class="nav-item col-auto">
+                                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                                    <i class="fa-fw fas fa-cog"></i>
+                                </button>
+                            </div>
+                            <!-- -->
+                            <div class="nav-item col-auto">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="settings" aria-selected="true">
+                                    <i class="fa-fw fas fa-home"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- -->
-            <div id="settings" class="tab-pane h-100">
-                <div class="p-2">
-                    <div class="row g-3">
-                        <!-- -->
-                        <div class="col-12">
-                            <div class="row g-2">
-                                <div class="col-12">
-                                    <span class="h6">Settings</span>
-                                </div>
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalWipe">
-                                        Wipe Local Data
-                                    </button>
+            <div class="tab-content container p-0 position-relative" style="height:calc(100% - 49.19px);">
+                <!-- -->
+                <div id="home" class="tab-pane h-100 active">
+                    <!-- -->
+                    <div id="resources" class="p-2">
+                    </div>
+                    <!-- -->
+                    <div id="category-panes" class="tab-content" style="height:calc(100% - 43.2px - 54.8px);">
+                    </div>
+                    <!-- -->
+                    <div class="p-2 bg-black border-top border-start border-end rounded-top" style="overflow-x: auto;">
+                        <div id="category-tabs" class="nav nav-pills flex-nowrap row g-2">
+                        </div>
+                    </div>
+                </div>
+                <!-- -->
+                <div id="settings" class="tab-pane h-100 scrollbar">
+                    <div class="px-2 py-3">
+                        <div class="row g-3">
+                            <!-- -->
+                            <div class="col-12">
+                                <div class="row g-2">
+                                    <div class="col-12">
+                                        <span class="h6">About</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card card-body">
+                                            <div class="row g-3">
+                                                <span class="col-12 text-center text-normal">This game has been designed and built with all the love in the world by <span class="text-white">Freddec</span>. If you want to support him, choose your solution below.</span>
+                                                <div class="col-12">
+                                                    <div class="row g-2 align-items-center justify-content-center">
+                                                        <div class="col-4 text-center"><a href="https://www.patreon.com/bePatron?u=61283131" target="_blank" class="w-100 btn" style="width: 80px;"><img src="./img/ui/patreon.png" width="24px" height="24px"><div class="mt-1">Become a supporter</div></a></div>
+                                                        <div class="col-4 text-center"><a href="https://ko-fi.com/freddecgames" target="_blank" class="w-100 btn" style="width: 80px;"><img src="./img/ui/kofi.png" width="24px" height="24px"><div class="mt-1">Buy me a Ko-fi</div></a></div>
+                                                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" class="col-4 text-center">
+                                                            <input type="hidden" name="cmd" value="_s-xclick">
+                                                            <input type="hidden" name="hosted_button_id" value="7XYD7SJFKQ8M4">
+                                                            <button type="submit" class="w-100 btn"><img src="./img/ui/paypal.png" width="24px" height="24px"><div class="mt-1">Make a donation</div></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <span class="col-12 text-center text-normal">To keep in touch with new games or if you want to submit suggestions/bugs, please visit links below.</span>
+                                                <div class="col-12">
+                                                    <div class="row g-2 align-items-center justify-content-center">
+                                                        <div class="col-auto"><a href="https://freddecgames.com/" target="_blank" class="btn" style="width:140px;"><span><i class="fas fa-fw fa-external-link-alt"></i></span> <span class="ms-1">Freddec Games</span></a></div>
+                                                        <div class="col-auto"><a href="https://discord.gg/3UkgeeT9CV" target="_blank" class="btn" style="width:140px;"><span><i class="fab fa-fw fa-discord"></i></span> <span class="ms-1">Discord</span></a></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 text-center">
+                                                    <span class="text-normal">Icons are provided by <a href="https://fontawesome.com/" target="_blank">Fontawesome</a> and <a href="https://icons8.com/" target="_blank">Icons8</a></span>
+                                                </div>
+                                                <div class="border-top pt-3 col-12 text-center">
+                                                    <span class="text-danger"><i class="fa-fw fas fa-exclamation-triangle"></i> This game is still in developpement.<br>Bugs and data lost can occur.<br>Play at your own risk.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <span class="h6">Import Save</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <textarea id="importData" spellcheck="false" rows="5" class="form-control"></textarea>
+                                                <div class="mt-2 text-end">
+                                                    <button type="button" class="btn btn-primary" onclick="clickImport()">
+                                                        <span><i class="fa-fw fas fa-file-import"></i></span>
+                                                        <span class="ms-1">Import</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <span class="h6">Export Save</span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row gx-2 flex-nowrap">
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalWipe">
+                                                    <span><i class="fas fa-fw fa-skull"></i></span>
+                                                    <span class="ms-1">Wipe Local Data</span>
+                                                </button>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row g-2 flex-wrap justify-content-end">
+                                                    <div class="col-auto">
+                                                        <button type="button" class="btn btn-primary" style="width:155px;" onclick="clickExportCopy()">
+                                                            <span><i class="fas fa-fw fa-copy"></i></span>
+                                                            <span>Copy to clipboard</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <button type="button" class="btn btn-primary" style="width:155px;" onclick="clickExportDownload()">
+                                                            <span><i class="fas fa-fw fa-download"></i></span>
+                                                            <span>Download TXT file</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <!-- -->
+            <div id="toast" class="toast" data-bs-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body"><span id="txt" class="fw-semibold"></span></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
         </div>

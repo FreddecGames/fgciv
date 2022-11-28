@@ -26,7 +26,26 @@
             }
             
             return val
-        },        
+        },
+        
+        show: function(selector, condition) {
+            
+            let elt = ui.find(selector)
+            
+			if (condition === undefined) { condition = (elt.style.display == 'none') }
+            
+            let displayVal = 'initial'
+            if (!condition) { displayVal = 'none' }
+            
+            elt.style.display = displayVal
+        },
+        
+        hide: function(selector, condition) {
+            
+			if (condition === undefined) { condition = true }
+            
+			this.show(selector, !condition)
+		},
 	}
 
 	if (window) { window.ui = ui }

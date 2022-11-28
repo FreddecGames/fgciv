@@ -36,6 +36,8 @@ class GameObject {
             let names = Object.getOwnPropertyNames(this.dataToSave)
             names.forEach(name => { if (data[this.id][name]) { this[name] = data[this.id][name] } })
         }
+    
+        if (this.build && this.remainingTime > this.build.time) { this.remainingTime = this.build.time }
     }
     
     onSave() {
@@ -156,26 +158,39 @@ class Game {
     
     start() {
     
-        document.addEventListener('DOMContentLoaded', function(e) {
+        try {
             
             let defaultLocale = trans.supportedOrDefault(trans.browserLocales())
             trans.setLocale(defaultLocale)
             
             game.loadData()
 
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
             
             game.rafHandle = requestAnimationFrame(game.loop)
             game.saveInterval = setInterval(() => { game.saveData() }, game.autoSaveDelay)
-        })
-        
-        window.onbeforeunload = () => {
             
-            if (!this.resetInProgress) { this.saveData() }
+            window.onbeforeunload = () => {
+                
+                if (!this.resetInProgress) { this.saveData() }
+                
+                clearInterval(this.saveInterval)
+                cancelAnimationFrame(this.rafHandle)
+            }
             
-            clearInterval(this.saveInterval)
-            cancelAnimationFrame(this.rafHandle)
+            ui.hide('#screenLoading', true)
+            ui.show('#screenGame', true)
+        }
+        catch (error) {
+            
+            console.error(error)
+            
+            ui.find('#screenErrorTxt').innerHTML = '"' + error + '"'
+            ui.find('#screenErrorLocalData').innerHTML = localStorage.getItem(game.localStorageName)
+            
+            ui.hide('#screenLoading', true)
+            ui.show('#screenError', true)
         }
     }
 
@@ -517,7 +532,7 @@ class Game {
         
         this.gameCategories.forEach(category => {
             
-            html = '<div class="nav-item col" data-show="unlocked" data-cat="' + category.id + '">'
+            html = '<div class="nav-item col-auto col-lg" data-show="unlocked" data-cat="' + category.id + '">'
                 html += '<button class="nav-link w-100 ' + (category.default ? 'active' : '') + '" id="' + category.uiId + '-tab" data-bs-toggle="tab" data-bs-target="#' + category.uiId + '-pane" type="button" role="tab" aria-controls="' + category.uiId + '" aria-selected="' + (category.default ? 'true' : 'false') + '">'
                     html += '<i class="fa-fw fas fa-' + category.tabIcon + '"></i>'
                 html += '</button>'
@@ -556,12 +571,21 @@ class Game {
             }
         })        
     }
+    
+    showToast(data) {
+                
+        ui.find('#toast #txt').innerHTML = data.txt
+        
+        let toastHtml = ui.find('#toast')
+        let toast = new bootstrap.Toast(toastHtml)
+        toast.show()
+    }
 }
 
 //===
 
 var game = new Game()
-game.start()
+setTimeout(function() { game.start() }, 1000)
 
 //===
 
@@ -802,7 +826,8 @@ function getBtnCheck(obj, btnLabel) {
     html += '<div class="row gx-2 justify-content-end">'
         html += '<div class="col-auto">'
             html += '<button type="button" class="btn btn-primary" data-check="canCheck" onclick="clickCheck(\'' + obj.id + '\')">'
-                html += btnLabel
+                html += '<span class="me-1">' + btnLabel + '</span>'
+                html += '<span><i class="fa-fw fas fa-arrow-alt-circle-right"></i></span>'
             html += '</button>'
         html += '</div>'
     html += '</div>'
@@ -987,7 +1012,7 @@ function getHtmlDone(obj) {
                 if (obj.uiId == 'techs') {
                     html += '<div class="col-auto">'
                         html += '<div class="dropdown">'
-                            html += '<button class="w-100 btn py-0 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">'
+                            html += '<button class="w-100 btn py-1 px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">'
                                 html += '<i class="fa-fw fas fa-info-circle"></i>'
                             html += '</button>'
                             html += '<div class="dropdown-menu">'
@@ -1126,6 +1151,43 @@ function clickWipe() {
     window.location.replace('')
 }
 
+function clickImport() {
+    
+    let importData = ui.find('#importData').value
+    
+    if (!importData || !importData.trim()) return game.showToast({ txt:'No data to import!' })
+    if (importData.length % 4 !== 0) return game.showToast({ txt:'Data corrupted!' })
+    
+    game.resetInProgress = true
+    
+    localStorage.setItem(game.localStorageName, data)
+    window.location.replace('')
+}
+
+function clickExportCopy() {
+    
+    let exportData = localStorage.getItem(game.localStorageName)
+    
+    navigator.clipboard.writeText(exportData)
+    game.showToast({ txt:'Game data copied in clipboard!' })
+}
+
+function clickExportDownload() {
+    
+    let exportData = localStorage.getItem(game.localStorageName)
+
+    let element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportData))
+    element.setAttribute('download', 'FGCosmos_save_' + (new Date).getTime() + '.txt')
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+}
+
 function clickBuild(objId) {
     if (canBuild(objId) == true) {
         
@@ -1160,7 +1222,7 @@ function clickCancel(objId) {
         }
         
         obj.status = 'idle'
-        obj.remainingTime = 0
+        obj.remainingTime = obj.build.time
     }
 }
 

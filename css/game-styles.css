@@ -22,6 +22,9 @@ body {
 
 a { text-decoration: none; }
 
+.text-bg-danger { border-color: #dc3545!important; }
+.text-bg-success { border-color: #198754!important; }
+
 :focus-visible { outline: none; }
 
 ::-webkit-scrollbar { width: .25rem; height: .35rem; }
@@ -56,7 +59,8 @@ a { text-decoration: none; }
     --bs-btn-padding-x: .75rem;
     --bs-btn-padding-y: .25rem;
     --bs-btn-font-size: .8rem;
-    --bs-btn-color: #adbac7;
+    --bs-btn-font-weight: 600;
+    --bs-btn-color: #fff;
     --bs-btn-bg: #444c56;
     --bs-btn-hover-bg: #c87f0a;
     --bs-btn-hover-color: #22272e;
@@ -64,6 +68,8 @@ a { text-decoration: none; }
     --bs-btn-active-color: #22272e;
     --bs-btn-disabled-opacity: 0.5;
 }
+
+.btn-close:focus { box-shadow: none; }
 
 .btn-primary {
     --bs-btn-bg: #f39c12;
@@ -122,3 +128,60 @@ a { text-decoration: none; }
 }
 
 .modal-content { padding: .5rem; }
+
+.form-control {
+    font-size: var(--bs-body-font-size); color: #fff;
+    background-color: #444c56;
+    padding: .25rem .5rem;
+    border: 1px solid #444c56;
+}
+.form-control:focus {
+    color: #fff;
+    background-color: #444c56;
+    border-color: #f39c12;
+    box-shadow: none;
+}
+
+.toast {
+    --bs-toast-padding-x: .5rem;
+    --bs-toast-padding-y: .25rem;
+    --bs-toast-spacing: 1rem;
+    --bs-toast-font-size: var(--bs-body-font-size);
+    --bs-toast-color: var(--bs-body-color);
+    --bs-toast-bg: #343a40;
+    --bs-toast-border-width: 1px;
+    --bs-toast-border-color: #f39c12;
+    --bs-toast-box-shadow: none;
+}
+////////////////////////////////////////////////////////////////////////////////
+
+@keyframes flicker {
+    0%   { opacity: .9; }
+    50%  { opacity: .1; }
+    100% { opacity: .9; }
+}
+@-o-keyframes flicker{
+    0%   { opacity: .9; }
+    50%  { opacity: .1; }
+    100% { opacity: .9; }
+}
+@-moz-keyframes flicker{
+    0%   { opacity: .9; }
+    50%  { opacity: .1; }
+    100% { opacity: .9; }
+}
+@-webkit-keyframes flicker{
+    0%   { opacity: .9; }
+    50%  { opacity: .1; }
+    100% { opacity: .9; }
+}
+
+.flicker {
+   -webkit-animation: flicker 2s infinite;
+   -moz-animation: flicker 2s infinite;
+   -ms-animation: flicker 2s infinite;
+   -o-animation: flicker 2s infinite;
+    animation: flicker 2s infinite;
+}    
+
+////////////////////////////////////////////////////////////////////////////////
